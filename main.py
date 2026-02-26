@@ -4,14 +4,13 @@ load_dotenv()
 
 from core.loader import load_events, event_from_row
 from core.validator import validate_torque
-from core.analyzer import analyze_incident
 from core.rag import build_vector_store, retrieve_context
+from core.llm_reasoner import reason_with_llm
 
 
 def main():
     df = load_events("data/torque_events.csv")
 
-    # build vector store once
     vectorstore = build_vector_store("data/sop_chunks.json")
 
     sample_row = df.iloc[0]
@@ -19,19 +18,13 @@ def main():
 
     validation = validate_torque(event)
 
-    # build retrieval query
     query = f"{event.joint} {validation}"
-
     context = retrieve_context(vectorstore, query)
 
-    result = analyze_incident(event, validation)
+    llm_output = reason_with_llm(event, validation, context)
 
-    print("\n=== INCIDENT ANALYSIS ===")
-    print(result)
-
-    print("\n=== RETRIEVED SOP CONTEXT ===")
-    for c in context:
-        print("-", c)
+    print("\n=== LLM DECISION ===")
+    print(llm_output)
 
 
 if __name__ == "__main__":
