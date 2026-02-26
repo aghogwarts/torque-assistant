@@ -1,0 +1,30 @@
+import json
+import os
+from dotenv import load_dotenv
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+
+# load env variables
+load_dotenv()
+
+
+def build_vector_store(path: str):
+    with open(path) as f:
+        chunks = json.load(f)
+
+    texts = [c["content"] for c in chunks]
+
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small",  # embedding model
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.getenv("OPENROUTER_API_KEY"),  # explicit key
+    )
+
+    vectorstore = FAISS.from_texts(texts, embeddings)
+    return vectorstore
+
+
+# retrieve top k relevant chunks
+def retrieve_context(vectorstore, query: str, k: int = 4):
+    docs = vectorstore.similarity_search(query, k=k)
+    return [d.page_content for d in docs]

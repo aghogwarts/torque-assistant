@@ -1,0 +1,2001 @@
+[
+  {
+    "sop_id": "SOP-GEN-0001",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Sedan-X",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0002",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Truck-T",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0003",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_LEFT",
+    "vehicle_model": "SUV-Z",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0004",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "SUV-Z",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": 15,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 45 Nm \u00b1 5 Nm",
+      "Further tighten by 15 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0005",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "EV-Q",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 80,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 80 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0006",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Sedan-X",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0007",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_R",
+    "vehicle_model": "Truck-T",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0008",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "STEERING_COLUMN_BOLT",
+    "vehicle_model": "Truck-T",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 40,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 40 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0009",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_R",
+    "vehicle_model": "Truck-T",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0010",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_RIGHT",
+    "vehicle_model": "SUV-Z",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 15,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 15 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0011",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BATTERY_HOLD_DOWN",
+    "vehicle_model": "EV-Q",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 65,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 65 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0012",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_R",
+    "vehicle_model": "SUV-Z",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0013",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FR",
+    "vehicle_model": "Truck-T",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0014",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "STEERING_COLUMN_BOLT",
+    "vehicle_model": "Hatch-A",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 140,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 140 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0015",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_F",
+    "vehicle_model": "Sedan-X",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0016",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_F",
+    "vehicle_model": "Hatch-A",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0017",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RL",
+    "vehicle_model": "Truck-T",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0018",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BRAKE_CALIPER_BOLT",
+    "vehicle_model": "Hatch-A",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 60,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 60 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0019",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_L",
+    "vehicle_model": "SUV-Z",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0020",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "Truck-T",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 45 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0021",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BRAKE_CALIPER_BOLT",
+    "vehicle_model": "Sedan-X",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 60,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 60 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0022",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FL",
+    "vehicle_model": "SUV-Z",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0023",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BATTERY_HOLD_DOWN",
+    "vehicle_model": "Hatch-A",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 65,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 65 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0024",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_LEFT",
+    "vehicle_model": "Sedan-X",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0025",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "SUV-Z",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 110,
+    "tolerance_nm": 10,
+    "angle_deg": 25,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 110 Nm \u00b1 10 Nm",
+      "Further tighten by 25 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0026",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FR",
+    "vehicle_model": "Truck-T",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0027",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RL",
+    "vehicle_model": "SUV-Z",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0028",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_LEFT",
+    "vehicle_model": "Truck-T",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0029",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_R",
+    "vehicle_model": "EV-Q",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0030",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RR",
+    "vehicle_model": "Truck-T",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0031",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BRAKE_CALIPER_BOLT",
+    "vehicle_model": "Sedan-X",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 60,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 60 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0032",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BRAKE_CALIPER_BOLT",
+    "vehicle_model": "Truck-T",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 60,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 60 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0033",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "SUV-Z",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 140,
+    "tolerance_nm": 10,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 140 Nm \u00b1 10 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0034",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_R",
+    "vehicle_model": "Hatch-A",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0035",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RR",
+    "vehicle_model": "SUV-Z",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0036",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_LEFT",
+    "vehicle_model": "Truck-T",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0037",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_RIGHT",
+    "vehicle_model": "SUV-Z",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 15,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 15 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0038",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RR",
+    "vehicle_model": "EV-Q",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0039",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FL",
+    "vehicle_model": "Truck-T",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0040",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BRAKE_CALIPER_BOLT",
+    "vehicle_model": "Hatch-A",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 60,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 60 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0041",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Hatch-A",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0042",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_RIGHT",
+    "vehicle_model": "Sedan-X",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0043",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "SUV-Z",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0044",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FL",
+    "vehicle_model": "Hatch-A",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0045",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "STEERING_COLUMN_BOLT",
+    "vehicle_model": "SUV-Z",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 110,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 110 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0046",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Sedan-X",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 20,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 20 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0047",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FR",
+    "vehicle_model": "Hatch-A",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0048",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RL",
+    "vehicle_model": "Hatch-A",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0049",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BATTERY_HOLD_DOWN",
+    "vehicle_model": "Sedan-X",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 65,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 65 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0050",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "STEERING_COLUMN_BOLT",
+    "vehicle_model": "EV-Q",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0051",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RL",
+    "vehicle_model": "EV-Q",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0052",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_RIGHT",
+    "vehicle_model": "EV-Q",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0053",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FR",
+    "vehicle_model": "Sedan-X",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0054",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_LEFT",
+    "vehicle_model": "Truck-T",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0055",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "Truck-T",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 80,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 80 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0056",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_R",
+    "vehicle_model": "Hatch-A",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Non-critical joint; document any deviations"
+    ],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0057",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Sedan-X",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0058",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_R",
+    "vehicle_model": "Sedan-X",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0059",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_R",
+    "vehicle_model": "SUV-Z",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0060",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_FRONT_LEFT",
+    "vehicle_model": "Truck-T",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 20,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 20 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0061",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_L",
+    "vehicle_model": "Sedan-X",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0062",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BRAKE_CALIPER_BOLT",
+    "vehicle_model": "EV-Q",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 60,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 60 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0063",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "EV-Q",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 45 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0064",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_L",
+    "vehicle_model": "SUV-Z",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0065",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Sedan-X",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 35,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 35 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0066",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_R",
+    "vehicle_model": "EV-Q",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0067",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RR",
+    "vehicle_model": "Sedan-X",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0068",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_FL",
+    "vehicle_model": "SUV-Z",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0069",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "Sedan-X",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0070",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RR",
+    "vehicle_model": "EV-Q",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0071",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RL",
+    "vehicle_model": "Hatch-A",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0072",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "BATTERY_HOLD_DOWN",
+    "vehicle_model": "EV-Q",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 65,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 65 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0073",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_L",
+    "vehicle_model": "EV-Q",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0074",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "EV-Q",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0075",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "EV-Q",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "ELECTRIC_ANGLE_GUN",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 110,
+    "tolerance_nm": 10,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 110 Nm \u00b1 10 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0076",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "ENGINE_MOUNT_REAR_RIGHT",
+    "vehicle_model": "Hatch-A",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 85,
+    "tolerance_nm": 5,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 85 Nm \u00b1 5 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Do not reuse torque-to-yield or stretch bolts after removal"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0077",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "TRANSMISSION_MOUNT_BOLT",
+    "vehicle_model": "Sedan-X",
+    "station": "FINAL_ASSY_ST-22",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "Torque+Angle",
+    "pre_torque_nm": 40,
+    "target_torque_nm": 140,
+    "tolerance_nm": 10,
+    "angle_deg": 30,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Pre-tighten to 40 Nm",
+      "Final tighten to 140 Nm \u00b1 10 Nm",
+      "Further tighten by 30 degrees",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0078",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SUSPENSION_ARM_BOLT_F",
+    "vehicle_model": "Truck-T",
+    "station": "INTERIOR_ST-08",
+    "tool_recommendation": "DC_GUN",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 100,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 100 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0079",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "WHEEL_LUG_NUT_RL",
+    "vehicle_model": "Hatch-A",
+    "station": "POWERTRAIN_ST-05",
+    "tool_recommendation": "MANUAL_WRENCH",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 120,
+    "tolerance_nm": 10,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten in star pattern",
+      "Apply final torque of 120 Nm \u00b1 10 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [
+      "Uneven tightening may cause wheel distortion; re-check pattern"
+    ],
+    "safety_critical": true,
+    "last_revision": "2026-02-16"
+  },
+  {
+    "sop_id": "SOP-GEN-0080",
+    "source_type": "Hybrid-Generated",
+    "subsystem": "Assembly",
+    "joint": "SEAT_FRAME_REAR_R",
+    "vehicle_model": "Hatch-A",
+    "station": "CHASSIS_ST-14",
+    "tool_recommendation": "PNEUMATIC_TQ",
+    "tightening_method": "TorqueOnly",
+    "pre_torque_nm": null,
+    "target_torque_nm": 45,
+    "tolerance_nm": 5,
+    "angle_deg": null,
+    "steps": [
+      "Ensure mating surfaces and threads are clean",
+      "Install fastener by hand and verify alignment",
+      "Tighten to 45 Nm \u00b1 5 Nm",
+      "Verify torque (and angle if applicable) in the MES"
+    ],
+    "warnings": [],
+    "safety_critical": false,
+    "last_revision": "2026-02-16"
+  }
+]
