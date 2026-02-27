@@ -67,7 +67,4 @@ def reason_with_llm(event, validation, context):
 
     response = llm.invoke(formatted_prompt)
 
-    print("\n[LLM RAW RESPONSE]")
-    print(response.content)
-
     return response.content
