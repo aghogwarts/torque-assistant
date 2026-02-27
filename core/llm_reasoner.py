@@ -52,16 +52,22 @@ Respond in JSON format:
 
 def reason_with_llm(event, validation, context):
 
-    response = llm.invoke(
-        prompt.format(
-            joint=event.joint,
-            target=event.target_torque_nm,
-            actual=event.actual_torque_nm,
-            tolerance=event.tolerance_nm,
-            validation=validation,
-            safety=event.safety_critical,
-            context="\n".join(context),
-        )
+    formatted_prompt = prompt.format(
+        joint=event.joint,
+        target=event.target_torque_nm,
+        actual=event.actual_torque_nm,
+        tolerance=event.tolerance_nm,
+        validation=validation,
+        safety=event.safety_critical,
+        context="\n".join(context),
     )
+
+    print("\n[LLM PROMPT]")
+    print(formatted_prompt)
+
+    response = llm.invoke(formatted_prompt)
+
+    print("\n[LLM RAW RESPONSE]")
+    print(response.content)
 
     return response.content

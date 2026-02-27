@@ -9,8 +9,6 @@ from langchain_community.vectorstores import FAISS
 load_dotenv()
 
 api_key = os.getenv("OPENROUTER_API_KEY")
-if api_key is None:
-    raise ValueError("OPENROUTER_API_KEY not set")
 
 
 def build_vector_store(path: str):
