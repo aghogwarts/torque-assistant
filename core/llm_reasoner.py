@@ -1,16 +1,20 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
+from pydantic import SecretStr
 import os
 
 load_dotenv()
 
+api_key = os.getenv("OPENROUTER_API_KEY")
+if not api_key:
+    raise ValueError("OPENROUTER_API_KEY not set")
 
 # initialize model via OpenRouter
 llm = ChatOpenAI(
     model="openai/gpt-4o-mini",
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
+    api_key=SecretStr(api_key),
     temperature=0,
 )
 

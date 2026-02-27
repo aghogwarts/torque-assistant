@@ -1,14 +1,22 @@
 import json
 import os
 from dotenv import load_dotenv
+from pydantic import SecretStr
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
 # load env variables
 load_dotenv()
 
+api_key = os.getenv("OPENROUTER_API_KEY")
+if api_key is None:
+    raise ValueError("OPENROUTER_API_KEY not set")
+
 
 def build_vector_store(path: str):
+    if api_key is None:
+        raise ValueError("OPENROUTER_API_KEY not set")
+
     with open(path) as f:
         chunks = json.load(f)
 
@@ -17,7 +25,7 @@ def build_vector_store(path: str):
     embeddings = OpenAIEmbeddings(
         model="text-embedding-3-small",  # embedding model
         base_url="https://openrouter.ai/api/v1",
-        api_key=os.getenv("OPENROUTER_API_KEY"),  # explicit key
+        api_key=SecretStr(api_key),
     )
 
     vectorstore = FAISS.from_texts(texts, embeddings)
