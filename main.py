@@ -7,6 +7,8 @@ from core.validator import validate_torque
 from core.rag import build_vector_store, retrieve_context
 from core.llm_reasoner import reason_with_llm
 
+from core.decision_agent import run_decision_agent
+
 VERBOSE = True
 
 
@@ -52,6 +54,11 @@ def main():
 
     print("\n=== [LLM DECISION] ===")
     print(llm_output)
+
+    agent_result = run_decision_agent(event, validation, context)
+
+    print("\n[=== AGENT RESULT ===]")
+    print(agent_result)
 
     print("\n[END]\n")
 
