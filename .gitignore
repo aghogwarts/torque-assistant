@@ -1,6 +1,7 @@
 # Other Directories
 chroma_db/
 chrome_store/
+vector_index/
 secret.txt
 
 # Byte-compiled / optimized / DLL files
