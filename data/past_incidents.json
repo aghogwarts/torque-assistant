@@ -1,0 +1,11 @@
+[
+  {
+    "content": "Rear axle bolt under-torqued at station B12. Root cause was worn torque tool. Corrective action: recalibrated tool."
+  },
+  {
+    "content": "Wheel lug nut over-torque detected on line 3. Bolt stretch occurred. Action: bolt replaced and torque spec verified."
+  },
+  {
+    "content": "Steering column bolt missing angle measurement. Operator retrained and MES validation rule added."
+  }
+]

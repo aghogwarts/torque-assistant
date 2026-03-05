@@ -12,8 +12,9 @@ class IncidentState(BaseModel):
 
     angle_required: Optional[float] = None
     actual_angle_deg: Optional[float] = None
-
     safety_critical: bool
+
+    incident_context: List[str] = []
 
     validation: Optional[str] = None
     rag_context: List[str] = []

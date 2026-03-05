@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from core.loader import load_events, event_from_row
-from core.rag import build_vector_store
+from core.rag import build_vector_store, build_incident_vector_store
 from core.workflow import build_workflow
 from core.state import IncidentState
 
@@ -11,11 +11,12 @@ from core.state import IncidentState
 def main():
 
     df = load_events("data/torque_events.csv")
+    incident_vectorstore = build_incident_vector_store("data/past_incidents.json")
     vectorstore = build_vector_store("data/sop_chunks.json")
 
     event = event_from_row(df.iloc[0])
 
-    workflow = build_workflow(vectorstore)
+    workflow = build_workflow(vectorstore, incident_vectorstore)
 
     state = IncidentState(
         event_id=event.event_id,

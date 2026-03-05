@@ -57,6 +57,9 @@ Safety Critical: {safety}
 Relevant SOP:
 {context}
 
+Similar Past Incidents:
+{incident_context}
+
 Decide which tool to call.
 
 If validation is OK and not safety critical → close_tool  
@@ -68,7 +71,7 @@ Call exactly one tool.
 )
 
 
-def run_decision_agent(event, validation, context):
+def run_decision_agent(event, validation, context, incident_context):
 
     print("\n--- AGENT STEP 1 ---")
     print(f"Event ID: {event.event_id}")
@@ -80,12 +83,17 @@ def run_decision_agent(event, validation, context):
     for c in context:
         print("  -", c)
 
+    print("\nSimilar Past Incidents:")
+    for c in incident_context:
+        print("  -", c)
+
     formatted_prompt = prompt.format(
         event_id=event.event_id,
         joint=event.joint,
         validation=validation,
         safety=event.safety_critical,
         context="\n".join(context),
+        incident_context="\n".join(incident_context),
     )
 
     print("\n[AGENT] Sending prompt to model...\n")

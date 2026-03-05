@@ -8,8 +8,25 @@ from langchain_community.vectorstores import FAISS
 # load env variables
 load_dotenv()
 INDEX_PATH = "vector_index"
-
 api_key = os.getenv("OPENROUTER_API_KEY")
+
+
+def build_incident_vector_store(path: str):
+    if api_key is None:
+        raise ValueError("OPENROUTER_API_KEY not set")
+
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        base_url="https://openrouter.ai/api/v1",
+        api_key=SecretStr(api_key),
+    )
+
+    with open(path) as f:
+        incidents = json.load(f)
+
+    texts = [c["content"] for c in incidents]
+
+    return FAISS.from_texts(texts, embeddings)
 
 
 def build_vector_store(path: str):
@@ -30,19 +47,19 @@ def build_vector_store(path: str):
         )
 
     print("[RAG] Building FAISS index...")
-
     with open(path) as f:
         chunks = json.load(f)
 
     texts = [c["content"] for c in chunks]
-
     vectorstore = FAISS.from_texts(texts, embeddings)
-
     vectorstore.save_local(INDEX_PATH)
-
     print("[RAG] Index saved to disk.")
-
     return vectorstore
+
+
+def retrieve_incident_context(vectorstore, query: str, k: int = 3):
+    docs = vectorstore.similarity_search(query, k=k)
+    return [d.page_content for d in docs]
 
 
 # retrieve top k relevant chunks
