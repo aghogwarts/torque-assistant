@@ -50,10 +50,10 @@ def main():
         for c in context:
             print("  -", c)
 
-    llm_output = reason_with_llm(event, validation, context)
+    # llm_output = reason_with_llm(event, validation, context)
 
-    print("\n=== [LLM DECISION] ===")
-    print(llm_output)
+    # print("\n=== [LLM DECISION] ===")
+    # print(llm_output)
 
     agent_result = run_decision_agent(event, validation, context)
 

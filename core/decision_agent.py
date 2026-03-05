@@ -70,6 +70,16 @@ Call exactly one tool.
 
 def run_decision_agent(event, validation, context):
 
+    print("\n--- AGENT STEP 1 ---")
+    print(f"Event ID: {event.event_id}")
+    print(f"Joint: {event.joint}")
+    print(f"Validation: {validation}")
+    print(f"Safety Critical: {event.safety_critical}")
+
+    print("\nRetrieved SOP Context:")
+    for c in context:
+        print("  -", c)
+
     formatted_prompt = prompt.format(
         event_id=event.event_id,
         joint=event.joint,
@@ -78,22 +88,29 @@ def run_decision_agent(event, validation, context):
         context="\n".join(context),
     )
 
-    print("\n[AGENT PROMPT]")
-    print(formatted_prompt)
+    print("\n[AGENT] Sending prompt to model...\n")
 
     response = llm_with_tools.invoke(formatted_prompt)
 
-    print("\n[AGENT RAW RESPONSE]")
-    print(response)
+    finish_reason = response.response_metadata["finish_reason"]
+    print(f"[AGENT] Finish reason → {finish_reason}")
 
     if response.tool_calls:
+
         tool_call = response.tool_calls[0]
         tool_name = tool_call["name"]
         tool_args = tool_call["args"]
 
+        print("\nAgent Decision:")
+        print(f"  Tool selected → {tool_name}")
+        print(f"  Arguments → {tool_args}")
+
+        print("\nExecuting tool...\n")
+
         for t in tools:
             if t.name == tool_name:
-                return t.invoke(tool_args)
+                result = t.invoke(tool_args)
+                return result
 
-    print("\n[AGENT] No tool called.")
+    print("\n[AGENT] No tool selected")
     return None
