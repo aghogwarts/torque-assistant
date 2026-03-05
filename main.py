@@ -13,10 +13,6 @@ def main():
     df = load_events("data/torque_events.csv")
     vectorstore = build_vector_store("data/sop_chunks.json")
 
-    import core.workflow_nodes
-
-    core.workflow_nodes.vectorstore = vectorstore
-
     event = event_from_row(df.iloc[0])
 
     workflow = build_workflow(vectorstore)

@@ -11,11 +11,15 @@ def validation_node(state):
     return state
 
 
-def rag_node(state):
-    query = f"{state.joint} {state.validation}"
-    context = retrieve_context(vectorstore, query)
-    state.rag_context = context
-    return state
+def create_rag_node(vectorstore):
+
+    def rag_node(state):
+        query = f"{state.joint} {state.validation}"
+        context = retrieve_context(vectorstore, query)
+        state.rag_context = context
+        return state
+
+    return rag_node
 
 
 def agent_node(state):

@@ -1,11 +1,12 @@
 from langgraph.graph import StateGraph, END
 from core.state import IncidentState
-from core.workflow_nodes import validation_node, rag_node, agent_node
+from core.workflow_nodes import validation_node, create_rag_node, agent_node
 
 
 def build_workflow(vectorstore):
 
     graph = StateGraph(IncidentState)
+    rag_node = create_rag_node(vectorstore)
 
     graph.add_node("validate", validation_node)
     graph.add_node("rag", rag_node)
