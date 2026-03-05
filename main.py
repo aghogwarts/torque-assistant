@@ -32,10 +32,10 @@ def main():
         safety_critical=event.safety_critical,
     )
 
-    result = workflow.invoke(state)
+    print("\n--- WORKFLOW EXECUTION ---")
 
-    print("\nFINAL STATE")
-    print(result)
+    for step in workflow.stream(state):
+        print(f"\n {step}")
 
 
 if __name__ == "__main__":
