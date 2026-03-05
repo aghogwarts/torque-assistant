@@ -3,64 +3,39 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from core.loader import load_events, event_from_row
-from core.validator import validate_torque
-from core.rag import build_vector_store, retrieve_context
-from core.llm_reasoner import reason_with_llm
-
-from core.decision_agent import run_decision_agent
-
-VERBOSE = True
+from core.rag import build_vector_store
+from core.workflow import build_workflow
+from core.state import IncidentState
 
 
 def main():
-    if VERBOSE:
-        print("\n[START] Torque Assistant Initialized\n")
 
     df = load_events("data/torque_events.csv")
-
-    if VERBOSE:
-        print(f"[LOAD] Loaded {len(df)} events")
-
     vectorstore = build_vector_store("data/sop_chunks.json")
 
-    if VERBOSE:
-        print("[RAG] Vector store built successfully")
+    import core.workflow_nodes
 
-    sample_row = df.iloc[0]
-    event = event_from_row(sample_row)
+    core.workflow_nodes.vectorstore = vectorstore
 
-    if VERBOSE:
-        print("\n[EVENT]")
-        print(event)
+    event = event_from_row(df.iloc[0])
 
-    validation = validate_torque(event)
+    workflow = build_workflow(vectorstore)
 
-    if VERBOSE:
-        print(f"\n[VALIDATE] Result: {validation}")
+    state = IncidentState(
+        event_id=event.event_id,
+        joint=event.joint,
+        target_torque_nm=event.target_torque_nm,
+        actual_torque_nm=event.actual_torque_nm,
+        tolerance_nm=event.tolerance_nm,
+        angle_required=event.angle_required,
+        actual_angle_deg=event.actual_angle_deg,
+        safety_critical=event.safety_critical,
+    )
 
-    query = f"{event.joint} {validation}"
+    result = workflow.invoke(state)
 
-    if VERBOSE:
-        print(f"\n[RAG] Query: {query}")
-
-    context = retrieve_context(vectorstore, query)
-
-    if VERBOSE:
-        print(f"[RAG] Retrieved {len(context)} chunks:")
-        for c in context:
-            print("  -", c)
-
-    # llm_output = reason_with_llm(event, validation, context)
-
-    # print("\n=== [LLM DECISION] ===")
-    # print(llm_output)
-
-    agent_result = run_decision_agent(event, validation, context)
-
-    print("\n[=== AGENT RESULT ===]")
-    print(agent_result)
-
-    print("\n[END]\n")
+    print("\nFINAL STATE")
+    print(result)
 
 
 if __name__ == "__main__":
