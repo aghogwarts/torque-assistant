@@ -17,5 +17,6 @@ class IncidentState(BaseModel):
     incident_context: List[str] = []
 
     validation: Optional[str] = None
+    severity: Optional[str] = None  # LOW | MEDIUM | HIGH
     rag_context: List[str] = []
     agent_result: Optional[dict] = None

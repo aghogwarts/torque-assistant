@@ -6,8 +6,9 @@ vectorstore = None
 
 
 def validation_node(state):
-    result = validate_torque(state)
+    result, severity = validate_torque(state)
     state.validation = result
+    state.severity = severity
     return state
 
 
