@@ -32,7 +32,15 @@ def main():
     print("\n--- WORKFLOW EXECUTION ---")
 
     for step in workflow.stream(state):
-        print(f"\n {step}")
+        node = list(step.keys())[0]
+        if node == "validate":
+            print("\n[VALIDATION COMPLETE]")
+        elif node == "rag":
+            print("[SOP RETRIEVAL COMPLETE]")
+        elif node == "rag_incidents":
+            print("[INCIDENT HISTORY RETRIEVAL COMPLETE]")
+        elif node == "agent":
+            print("[AGENT DECISION COMPLETE]")
 
 
 if __name__ == "__main__":
