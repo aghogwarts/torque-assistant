@@ -1,11 +1,47 @@
 [
   {
-    "content": "Rear axle bolt under-torqued at station B12. Root cause was worn torque tool. Corrective action: recalibrated tool."
+    "content": "DC_GUN on POWERTRAIN_ST-05 produced over-torque readings on WHEEL_LUG_NUT_RR across 12 consecutive vehicles. Root cause: worn torque-limiting clutch. Corrective action: clutch replaced, tool recalibrated, 50-cycle verification run performed."
   },
   {
-    "content": "Wheel lug nut over-torque detected on line 3. Bolt stretch occurred. Action: bolt replaced and torque spec verified."
+    "content": "PNEUMATIC_TQ pressure drop on CHASSIS_ST-14 caused under-torque on TRANSMISSION_MOUNT_BOLT for 8 events. Root cause: blocked air supply filter. Action: filter replaced, air pressure restored, affected vehicles flagged for re-torque inspection."
   },
   {
-    "content": "Steering column bolt missing angle measurement. Operator retrained and MES validation rule added."
+    "content": "ELECTRIC_ANGLE_GUN angle sensor intermittent fault on ENGINE_MOUNT_FRONT_LEFT. Angle measurements missing for 6 events across one shift. Root cause: loose encoder connector. Action: connector reseated, sensor re-zeroed, all angle-required fasteners re-verified."
+  },
+  {
+    "content": "MANUAL_WRENCH operator on FINAL_ASSY_ST-22 applied under-torque on BRAKE_CALIPER_BOLT. Root cause: operator fatigue late in shift, torque setting slipped. Action: operator retrained, torque wrench click-point audited, shift-end spot-check procedure added."
+  },
+  {
+    "content": "Suspension arm bolt over-torque detected on CHASSIS_ST-14 during final audit. DC_GUN calibration had drifted +6 Nm. Affected vehicles recalled for inspection. Corrective action: daily calibration check mandated for DC_GUN."
+  },
+  {
+    "content": "Engine mount front right bolts returned under-torque on 3 consecutive EV-Q units. Investigation found incorrect SOP revision loaded in MES \u2014 old tolerance \u00b18 Nm instead of \u00b15 Nm. SOP corrected, MES updated."
+  },
+  {
+    "content": "TOOL_COMM_ERROR storm on DC_GUN during peak production. 4 events returned no torque reading. Root cause: intermittent CAN bus fault. Action: cable harness replaced, communication verified at 100 cycles."
+  },
+  {
+    "content": "Wheel lug nut FL over-torque on Truck-T model. Target 120 Nm, actual 134 Nm. Bolt yield detected. Root cause: wrong torque table loaded for Truck-T variant. Bolt replaced, SOP vehicle-model mapping audited across all stations."
+  },
+  {
+    "content": "Steering column bolt ANGLE_MISSING for 5 Sedan-X units at INTERIOR_ST-08. Operator bypassed angle step due to MES screen freeze. Action: MES stability patch applied, angle step made mandatory with hardware interlock."
+  },
+  {
+    "content": "Seat frame rear bolts under-torque on 2 Hatch-A units. PNEUMATIC_TQ air supply pressure dropped during compressor maintenance window. Maintenance scheduling updated to avoid overlap with production shifts."
+  },
+  {
+    "content": "ENGINE_MOUNT_REAR_RIGHT under-torque cluster \u2014 4 events in 20 minutes. PNEUMATIC_TQ tool battery low indicator ignored by operator. Tool auto-shutoff triggered mid-tighten. Action: low-battery alert added to station HMI."
+  },
+  {
+    "content": "Over-torque on BATTERY_HOLD_DOWN bolts on EV-Q. Actual torque 78 Nm vs target 65 Nm. Root cause: operator used wrong gun preset for EV variant. Preset selection now validated against VIN vehicle type in MES before tool enables."
+  },
+  {
+    "content": "SUSPENSION_ARM_BOLT_F under-torque discovered in end-of-line audit on 6 SUV-Z units. DC_GUN torque output degraded after dropping. Tool failed post-drop calibration check. All units reworked."
+  },
+  {
+    "content": "Angle measurement out-of-range on ENGINE_MOUNT_REAR_LEFT (actual 14\u00b0 vs required 30\u00b0). Operator started angle phase before pre-torque fully applied. Sequence lock implemented in tool controller firmware."
+  },
+  {
+    "content": "TRANSMISSION_MOUNT_BOLT angle incomplete across full Truck-T build run (22 units). MES angle verification step skipped due to software config error after server restart. Patch deployed, affected units re-inspected."
   }
 ]
