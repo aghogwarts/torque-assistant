@@ -47,26 +47,42 @@ llm_with_tools = llm.bind_tools(tools)
 
 prompt = ChatPromptTemplate.from_template(
     """
-You are a manufacturing decision agent.
+You are a manufacturing incident decision agent.
 
+Your task is to decide the correct operational action for a torque incident.
+
+Event Details
+-------------
 Event ID: {event_id}
 Joint: {joint}
-Validation: {validation}
+Validation Result: {validation}
 Safety Critical: {safety}
 
-Relevant SOP:
+Relevant SOP Instructions
+-------------------------
 {context}
 
-Similar Past Incidents:
+Similar Past Incidents
+----------------------
 {incident_context}
 
-Decide which tool to call.
+Instructions
+------------
+1. Review the validation result.
+2. Review the SOP instructions.
+3. Review similar historical incidents.
+4. Briefly reason about the situation.
+5. Select the correct tool.
 
-If validation is OK and not safety critical → close_tool  
-If minor issue → rework_tool  
-If safety critical issue → escalation_tool  
+Decision Rules
+--------------
+If validation is OK and the joint is not safety critical → close_tool  
+If there is a minor deviation → rework_tool  
+If the issue is safety critical or severe → escalation_tool  
 
 Call exactly one tool.
+
+Think carefully before selecting the tool.
 """
 )
 
