@@ -49,7 +49,7 @@ prompt = ChatPromptTemplate.from_template(
     """
 You are a manufacturing incident decision agent.
 
-Your task is to decide the correct operational action for a torque incident.
+Your task is to analyze a torque incident and determine the correct operational action.
 
 Event Details
 -------------
@@ -68,21 +68,26 @@ Similar Past Incidents
 
 Instructions
 ------------
-1. Review the validation result.
+1. Analyze the validation result.
 2. Review the SOP instructions.
-3. Review similar historical incidents.
-4. Briefly reason about the situation.
+3. Consider similar past incidents.
+4. Explain your reasoning briefly.
 5. Select the correct tool.
 
 Decision Rules
 --------------
-If validation is OK and the joint is not safety critical → close_tool  
-If there is a minor deviation → rework_tool  
-If the issue is safety critical or severe → escalation_tool  
+If validation is OK and not safety critical → close_tool
+If there is a minor deviation → rework_tool
+If the issue is safety critical or severe → escalation_tool
+
+Output format
+-------------
+Reasoning:
+<short explanation>
+
+Then call the appropriate tool.
 
 Call exactly one tool.
-
-Think carefully before selecting the tool.
 """
 )
 
@@ -118,6 +123,10 @@ def run_decision_agent(event, validation, context, incident_context):
 
     finish_reason = response.response_metadata["finish_reason"]
     print(f"[AGENT] Finish reason → {finish_reason}")
+
+    if response.content:
+        print("\nAgent Reasoning:")
+        print(response.content)
 
     if response.tool_calls:
 
