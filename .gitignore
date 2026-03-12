@@ -3,6 +3,7 @@ chroma_db/
 chrome_store/
 vector_index/
 old/
+run_reports/
 secret.txt
 
 # Byte-compiled / optimized / DLL files
