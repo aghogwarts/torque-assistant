@@ -75,7 +75,7 @@ def main():
 
     workflow = build_workflow(vectorstore, incident_vectorstore)
 
-    event = event_from_row(df.iloc[0])
+    event = event_from_row(df.iloc[38])
 
     # safety_critical resolved here — not from CSV, not inside any node.
     state = build_state(event, spec_lookup)
