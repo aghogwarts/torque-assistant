@@ -2,7 +2,7 @@
 <project version="4">
   <component name="Black">
     <option name="enabledOnSave" value="true" />
-    <option name="sdkName" value="Python 3.11 (torque-assistant)" />
+    <option name="sdkName" value="uv (torque-assistant)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (torque-assistant)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="uv (torque-assistant)" project-jdk-type="Python SDK" />
 </project>
