@@ -18,7 +18,7 @@ def auto_close_node(state):
     close_tool — so the logging refactor in a later step covers both paths.
     No RAG calls, no LLM call.
     """
-    print(f"[AUTO-CLOSE] {state.event_id} | {state.joint} | OK + LOW severity")
+    print(f"\n[AUTO-CLOSE] {state.event_id} | {state.joint} | OK + LOW severity")
     result = close_incident(state.event_id)
     state.agent_result = result
     return state

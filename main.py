@@ -8,6 +8,14 @@ from core.rag import build_vector_store, build_incident_vector_store
 from core.workflow import build_workflow
 from core.state import IncidentState
 
+# ── Config ────────────────────────────────────────────────────────────────────
+
+# Set to an int (e.g. 20) to cap the run during testing.
+# Set to None to process the full dataset.
+MAX_EVENTS = 50
+
+# ── Startup helpers ───────────────────────────────────────────────────────────
+
 
 def build_spec_lookup(sops_path: str) -> dict:
     """
@@ -18,8 +26,8 @@ def build_spec_lookup(sops_path: str) -> dict:
     here at startup, not inside any workflow node.
 
     Used in build_state() to pre-populate state.safety_critical before
-    the graph runs, ensuring the validator and any future router both
-    see the correct value from the very first node.
+    the graph runs, ensuring the validator and router both see the
+    correct value from the very first node.
     """
     with open(sops_path) as f:
         sops = json.load(f)
@@ -63,35 +71,127 @@ def build_state(event, spec_lookup: dict) -> IncidentState:
     )
 
 
+# ── Per-event runner ──────────────────────────────────────────────────────────
+
+
+def run_event(workflow, event, spec_lookup: dict) -> dict:
+    """
+    Runs one event through the workflow and returns a result summary dict.
+
+    Wrapped in try/except so a single API error or unexpected exception
+    does not abort the entire batch — the error is recorded in the result
+    and the loop continues with the next event.
+    """
+    state = build_state(event, spec_lookup)
+    path_taken = []
+
+    try:
+        for step in workflow.stream(state):
+            node = list(step.keys())[0]
+            state = list(step.values())[0]
+            path_taken.append(node)
+
+        # LangGraph stream yields state as a plain dict, not as IncidentState.
+        # Use dict.get() for all field access after the stream loop.
+        agent_result = state.get("agent_result") or {}
+        return {
+            "event_id": event.event_id,
+            "joint": event.joint,
+            "validation": state.get("validation"),
+            "severity": state.get("severity"),
+            "safety_critical": state.get("safety_critical"),
+            "path": path_taken,
+            "action": agent_result.get("status"),
+            "error": None,
+        }
+
+    except Exception as exc:
+        # state may be a dict (if stream started) or IncidentState (if it failed
+        # before the first step). Handle both.
+        sc = (
+            state.get("safety_critical")
+            if isinstance(state, dict)
+            else state.safety_critical
+        )
+        return {
+            "event_id": event.event_id,
+            "joint": event.joint,
+            "validation": None,
+            "severity": None,
+            "safety_critical": sc,
+            "path": path_taken,
+            "action": "ERROR",
+            "error": str(exc),
+        }
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+
+
 def main():
 
+    # --- Startup ---
+    print("[INIT] Loading events...")
     df = load_events("data/torque_events.csv")
-    incident_vectorstore = build_incident_vector_store("data/past_incidents.json")
+
+    # Apply cap if MAX_EVENTS is set
+    if MAX_EVENTS is not None:
+        df = df.head(MAX_EVENTS)
+        print(
+            f"[INIT] MAX_EVENTS={MAX_EVENTS} — processing {len(df)} of {MAX_EVENTS} events"
+        )
+    else:
+        print(f"[INIT] Processing all {len(df)} events")
+
+    print("[INIT] Building vector stores...")
     vectorstore = build_vector_store("data/sop_chunks.json")
+    incident_vectorstore = build_incident_vector_store("data/past_incidents.json")
 
-    # Build the joint → safety_critical lookup once at startup.
+    print("[INIT] Building spec lookup...")
     spec_lookup = build_spec_lookup("data/sops.json")
-    print(f"[INIT] Spec lookup built — {len(spec_lookup)} joints resolved from SOPs.")
+    print(f"[INIT] {len(spec_lookup)} joints resolved from SOPs")
 
+    print("[INIT] Compiling workflow...")
     workflow = build_workflow(vectorstore, incident_vectorstore)
 
-    event = event_from_row(df.iloc[38])
+    total = len(df)
 
-    # safety_critical resolved here — not from CSV, not inside any node.
-    state = build_state(event, spec_lookup)
+    # --- Batch loop ---
+    print(f"\n[BATCH] Starting — {total} events\n")
 
-    print("\n--- WORKFLOW EXECUTION ---")
+    results = []
 
-    for step in workflow.stream(state):
-        node = list(step.keys())[0]
-        if node == "validate":
-            print("\n[VALIDATION COMPLETE]")
-        elif node == "rag":
-            print("[SOP RETRIEVAL COMPLETE]")
-        elif node == "rag_incidents":
-            print("[INCIDENT HISTORY RETRIEVAL COMPLETE]")
-        elif node == "agent":
-            print("[AGENT DECISION COMPLETE]")
+    for i, (_, row) in enumerate(df.iterrows(), start=1):
+        event = event_from_row(row)
+        result = run_event(workflow, event, spec_lookup)
+        results.append(result)
+
+        # Single compact status line per event so progress is visible
+        # without drowning in per-node prints from the workflow itself.
+        path_str = " → ".join(result["path"])
+        status = (
+            f"[{i:>4}/{total}] {result['event_id']}  "
+            f"{result['joint']:<30}  "
+            f"{result['validation'] or 'ERROR':<15}  "
+            f"{result['severity'] or '':<8}  "
+            f"{path_str}"
+        )
+
+        if result["error"]:
+            print(f"{status}  !! {result['error']}")
+        else:
+            print(status)
+
+    # --- End of run summary (counts only — full report comes in logging step) ---
+    errors = sum(1 for r in results if r["error"])
+    auto_closed = sum(1 for r in results if "auto_close" in r["path"])
+    llm_used = total - auto_closed
+
+    print(f"\n[DONE] {total} events processed")
+    print(f"       auto-closed (no LLM) : {auto_closed}")
+    print(f"       full path (LLM used) : {llm_used}")
+    if errors:
+        print(f"       errors               : {errors}")
 
 
 if __name__ == "__main__":
