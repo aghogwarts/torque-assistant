@@ -4,6 +4,12 @@ def validate_torque(state) -> tuple[str, str]:
 
     validation_result: OK | UNDER_TORQUE | OVER_TORQUE | ANGLE_MISSING
     severity:          LOW | MEDIUM | HIGH
+
+    severity rules:
+      OK result                         → LOW
+      deviation + safety_critical=True  → HIGH
+      deviation + safety_critical=None  → HIGH  (unknown joint = fail-safe)
+      deviation + safety_critical=False → MEDIUM
     """
     lower = state.target_torque_nm - state.tolerance_nm
     upper = state.target_torque_nm + state.tolerance_nm
@@ -17,10 +23,13 @@ def validate_torque(state) -> tuple[str, str]:
     else:
         result = "OK"
 
-    # Severity — previously lived in the now-removed analyzer.py
+    # None (unknown joint) is treated as True — fail-safe for manufacturing.
+    # An unnecessary escalation is recoverable; a missed safety issue is not.
+    is_critical = state.safety_critical is True or state.safety_critical is None
+
     if result == "OK":
         severity = "LOW"
-    elif state.safety_critical:
+    elif is_critical:
         severity = "HIGH"
     else:
         severity = "MEDIUM"

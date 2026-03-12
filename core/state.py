@@ -12,7 +12,10 @@ class IncidentState(BaseModel):
 
     angle_required: Optional[float] = None
     actual_angle_deg: Optional[float] = None
-    safety_critical: bool
+
+    # Resolved from sops.json spec lookup in main.py before the graph runs.
+    # None means the joint was not found in SOP data — treated as HIGH (fail-safe).
+    safety_critical: Optional[bool] = None
 
     incident_context: List[str] = []
 

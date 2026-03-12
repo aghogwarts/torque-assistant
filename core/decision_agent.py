@@ -76,18 +76,16 @@ Instructions
 
 Decision Rules
 --------------
-If validation is OK and not safety critical → close_tool
-If there is a minor deviation → rework_tool
-If the issue is safety critical or severe → escalation_tool
+Safety Critical describes the JOINT, not the event outcome.
+An OK reading on a safety-critical joint means the tightening was correct — do not escalate it.
 
-Output format
--------------
-Reasoning:
-<short explanation>
+If validation is OK (any joint, any safety_critical value) → close_tool
+If validation is not OK AND safety_critical is False         → rework_tool
+If validation is not OK AND safety_critical is True          → escalation_tool
+If validation is not OK AND safety_critical is UNKNOWN       → escalation_tool (fail-safe)
 
-Then call the appropriate tool.
-
-Call exactly one tool.
+You must call exactly one tool using the tool-calling mechanism.
+Do not write JSON or code blocks — invoke the tool directly.
 """
 )
 
