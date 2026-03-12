@@ -1,4 +1,5 @@
 import os
+import logging
 from dotenv import load_dotenv
 from pydantic import SecretStr
 
@@ -9,12 +10,16 @@ from core.tools import create_escalation_ticket, log_rework, close_incident
 
 load_dotenv()
 
+logger = logging.getLogger("torque.agent")
+
 api_key = os.getenv("OPENROUTER_API_KEY")
 if not api_key:
     raise ValueError("OPENROUTER_API_KEY not set")
 
 
-# wrap tools for LLM
+# ── LangChain tool wrappers ───────────────────────────────────────────────────
+
+
 @tool
 def escalation_tool(event_id: str, reason: str):
     """Create an escalation ticket for a critical incident."""
@@ -33,6 +38,8 @@ def close_tool(event_id: str):
     return close_incident(event_id)
 
 
+# ── LLM setup ─────────────────────────────────────────────────────────────────
+
 llm = ChatOpenAI(
     model="openai/gpt-4o-mini",
     base_url="https://openrouter.ai/api/v1",
@@ -45,8 +52,9 @@ tools = [escalation_tool, rework_tool, close_tool]
 llm_with_tools = llm.bind_tools(tools)
 
 
-prompt = ChatPromptTemplate.from_template(
-    """
+# ── Prompt ────────────────────────────────────────────────────────────────────
+
+prompt = ChatPromptTemplate.from_template("""
 You are a manufacturing incident decision agent.
 
 Your task is to analyze a torque incident and determine the correct operational action.
@@ -86,25 +94,28 @@ If validation is not OK AND safety_critical is UNKNOWN       → escalation_tool
 
 You must call exactly one tool using the tool-calling mechanism.
 Do not write JSON or code blocks — invoke the tool directly.
-"""
-)
+""")
+
+
+# ── Agent runner ──────────────────────────────────────────────────────────────
 
 
 def run_decision_agent(event, validation, context, incident_context):
 
-    print("\n--- AGENT STEP 1 ---")
-    print(f"Event ID: {event.event_id}")
-    print(f"Joint: {event.joint}")
-    print(f"Validation: {validation}")
-    print(f"Safety Critical: {event.safety_critical}")
+    # All prints here are DEBUG — only visible when --verbose is passed.
+    logger.debug("\n--- AGENT STEP 1 ---")
+    logger.debug("Event ID: %s", event.event_id)
+    logger.debug("Joint: %s", event.joint)
+    logger.debug("Validation: %s", validation)
+    logger.debug("Safety Critical: %s", event.safety_critical)
 
-    print("\nRetrieved SOP Context:")
+    logger.debug("\nRetrieved SOP Context:")
     for c in context:
-        print("  -", c)
+        logger.debug("  - %s", c)
 
-    print("\nSimilar Past Incidents:")
+    logger.debug("\nSimilar Past Incidents:")
     for c in incident_context:
-        print("  -", c)
+        logger.debug("  - %s", c)
 
     formatted_prompt = prompt.format(
         event_id=event.event_id,
@@ -115,33 +126,30 @@ def run_decision_agent(event, validation, context, incident_context):
         incident_context="\n".join(incident_context),
     )
 
-    print("\n[AGENT] Sending prompt to model...\n")
+    logger.debug("\n[AGENT] Sending prompt to model...\n")
 
     response = llm_with_tools.invoke(formatted_prompt)
 
     finish_reason = response.response_metadata["finish_reason"]
-    print(f"[AGENT] Finish reason → {finish_reason}")
+    logger.debug("[AGENT] Finish reason → %s", finish_reason)
 
     if response.content:
-        print("\nAgent Reasoning:")
-        print(response.content)
+        logger.debug("\nAgent Reasoning:\n%s", response.content)
 
     if response.tool_calls:
-
         tool_call = response.tool_calls[0]
         tool_name = tool_call["name"]
         tool_args = tool_call["args"]
 
-        print("\nAgent Decision:")
-        print(f"  Tool selected → {tool_name}")
-        print(f"  Arguments → {tool_args}")
-
-        print("\nExecuting tool...\n")
+        logger.debug("\nAgent Decision:")
+        logger.debug("  Tool selected → %s", tool_name)
+        logger.debug("  Arguments → %s", tool_args)
+        logger.debug("\nExecuting tool...\n")
 
         for t in tools:
             if t.name == tool_name:
                 result = t.invoke(tool_args)
                 return result
 
-    print("\n[AGENT] No tool selected")
+    logger.debug("\n[AGENT] No tool selected")
     return None

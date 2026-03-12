@@ -1,4 +1,6 @@
+import argparse
 import json
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -7,12 +9,41 @@ from core.loader import load_events, event_from_row
 from core.rag import build_vector_store, build_incident_vector_store
 from core.workflow import build_workflow
 from core.state import IncidentState
+from core.tools import RUN_LOG, clear_run_log
+from core.reporter import save_report
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
 # Set to an int (e.g. 20) to cap the run during testing.
 # Set to None to process the full dataset.
-MAX_EVENTS = 50
+MAX_EVENTS = 20
+
+# ── Logging setup ─────────────────────────────────────────────────────────────
+
+
+def setup_logging(verbose: bool):
+    """
+    Configures the 'torque' logger hierarchy.
+
+    --verbose  -> DEBUG level: all agent reasoning, RAG retrieval, tool calls
+    (default)  -> INFO level:  only the per-event status lines and summaries
+
+    The 'torque.*' namespace covers torque.agent, torque.nodes, torque.tools —
+    all the internal workflow loggers. Setting it here means adding a new
+    logger in any core/ module automatically inherits the right level.
+    """
+    level = logging.DEBUG if verbose else logging.INFO
+    logging.basicConfig(
+        format="%(message)s",  # keep it clean — no timestamps in console output
+        level=level,
+    )
+    # Suppress noisy third-party loggers regardless of verbose flag
+    for noisy in ("httpx", "openai", "httpcore", "langchain", "faiss"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
+
+
+logger = logging.getLogger("torque.main")
+
 
 # ── Startup helpers ───────────────────────────────────────────────────────────
 
@@ -54,9 +85,10 @@ def build_state(event, spec_lookup: dict) -> IncidentState:
 
     if safety_critical is None:
         # Surface unknown joints clearly so they can be audited.
-        print(
-            f"[WARN] Joint '{event.joint}' not found in SOP spec lookup — "
-            f"treating as safety-critical (fail-safe)."
+        logger.warning(
+            "[WARN] Joint '%s' not found in SOP spec lookup — "
+            "treating as safety-critical (fail-safe).",
+            event.joint,
         )
 
     return IncidentState(
@@ -106,8 +138,8 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
         }
 
     except Exception as exc:
-        # state may be a dict (if stream started) or IncidentState (if it failed
-        # before the first step). Handle both.
+        # state may be a dict (if stream started) or IncidentState (if it
+        # failed before the first step). Handle both.
         sc = (
             state.get("safety_critical")
             if isinstance(state, dict)
@@ -130,16 +162,29 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
 
 def main():
 
-    # --- Startup ---
+    # ── CLI args ───────────────────────────────────────────────────────────────
+    parser = argparse.ArgumentParser(
+        description="Torque Incident Management Batch Runner"
+    )
+    parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        default=False,
+        help="Enable debug logging — shows agent reasoning, RAG context, tool calls.",
+    )
+    args = parser.parse_args()
+    setup_logging(args.verbose)
+
+    # ── Startup ────────────────────────────────────────────────────────────────
+    clear_run_log()  # reset tool action log before each batch
+
     print("[INIT] Loading events...")
     df = load_events("data/torque_events.csv")
 
-    # Apply cap if MAX_EVENTS is set
     if MAX_EVENTS is not None:
         df = df.head(MAX_EVENTS)
-        print(
-            f"[INIT] MAX_EVENTS={MAX_EVENTS} — processing {len(df)} of {MAX_EVENTS} events"
-        )
+        print(f"[INIT] MAX_EVENTS={MAX_EVENTS} — processing {len(df)} events")
     else:
         print(f"[INIT] Processing all {len(df)} events")
 
@@ -156,7 +201,12 @@ def main():
 
     total = len(df)
 
-    # --- Batch loop ---
+    # Derive batch label from first/last event IDs for folder naming
+    first_id = df.iloc[0]["event_id"]
+    last_id = df.iloc[-1]["event_id"]
+    batch_label = f"batch_{first_id}_to_{last_id}"
+
+    # ── Batch loop ─────────────────────────────────────────────────────────────
     print(f"\n[BATCH] Starting — {total} events\n")
 
     results = []
@@ -166,9 +216,9 @@ def main():
         result = run_event(workflow, event, spec_lookup)
         results.append(result)
 
-        # Single compact status line per event so progress is visible
-        # without drowning in per-node prints from the workflow itself.
-        path_str = " → ".join(result["path"])
+        # Single compact status line per event — always visible regardless of
+        # verbose flag, so you can watch the batch progress in real time.
+        path_str = " -> ".join(result["path"])
         status = (
             f"[{i:>4}/{total}] {result['event_id']}  "
             f"{result['joint']:<30}  "
@@ -182,16 +232,19 @@ def main():
         else:
             print(status)
 
-    # --- End of run summary (counts only — full report comes in logging step) ---
+    # ── End of run summary ─────────────────────────────────────────────────────
     errors = sum(1 for r in results if r["error"])
     auto_closed = sum(1 for r in results if "auto_close" in r["path"])
-    llm_used = total - auto_closed
+    llm_used = total - auto_closed - errors
 
     print(f"\n[DONE] {total} events processed")
     print(f"       auto-closed (no LLM) : {auto_closed}")
     print(f"       full path (LLM used) : {llm_used}")
     if errors:
         print(f"       errors               : {errors}")
+
+    # ── Save report ────────────────────────────────────────────────────────────
+    save_report(results, RUN_LOG, batch_label)
 
 
 if __name__ == "__main__":
