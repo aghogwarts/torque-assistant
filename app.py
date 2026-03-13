@@ -63,7 +63,7 @@ def main():
 
     # Sidebar
     with st.sidebar:
-        st.markdown("### ⚙️ Torque Assistant")
+        st.markdown("### >> Torque Assistant")
         st.caption("Automobile Assembly Line\nIncident Management System")
         st.divider()
 
