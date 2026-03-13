@@ -23,3 +23,5 @@ class IncidentState(BaseModel):
     severity: Optional[str] = None  # LOW | MEDIUM | HIGH
     rag_context: List[str] = []
     agent_result: Optional[dict] = None
+    # Captured from the LLM response — shown in the event inspector UI.
+    agent_reasoning: Optional[str] = None

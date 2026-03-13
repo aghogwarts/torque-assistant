@@ -8,3 +8,6 @@ faiss-cpu
 langchain-openai
 langchain-community
 langgraph
+
+streamlit
+plotly

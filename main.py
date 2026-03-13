@@ -20,7 +20,6 @@ MAX_EVENTS = 40
 
 # ── Logging setup ─────────────────────────────────────────────────────────────
 
-
 def setup_logging(verbose: bool):
     """
     Configures the 'torque' logger hierarchy.
@@ -34,7 +33,7 @@ def setup_logging(verbose: bool):
     """
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(
-        format="%(message)s",  # keep it clean — no timestamps in console output
+        format="%(message)s",   # keep it clean — no timestamps in console output
         level=level,
     )
     # Suppress noisy third-party loggers regardless of verbose flag
@@ -46,7 +45,6 @@ logger = logging.getLogger("torque.main")
 
 
 # ── Startup helpers ───────────────────────────────────────────────────────────
-
 
 def build_spec_lookup(sops_path: str) -> dict:
     """
@@ -85,11 +83,8 @@ def build_state(event, spec_lookup: dict) -> IncidentState:
 
     if safety_critical is None:
         # Surface unknown joints clearly so they can be audited.
-        logger.warning(
-            "[WARN] Joint '%s' not found in SOP spec lookup — "
-            "treating as safety-critical (fail-safe).",
-            event.joint,
-        )
+        logger.warning("[WARN] Joint '%s' not found in SOP spec lookup — "
+                       "treating as safety-critical (fail-safe).", event.joint)
 
     return IncidentState(
         event_id=event.event_id,
@@ -105,7 +100,6 @@ def build_state(event, spec_lookup: dict) -> IncidentState:
 
 # ── Per-event runner ──────────────────────────────────────────────────────────
 
-
 def run_event(workflow, event, spec_lookup: dict) -> dict:
     """
     Runs one event through the workflow and returns a result summary dict.
@@ -114,12 +108,12 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
     does not abort the entire batch — the error is recorded in the result
     and the loop continues with the next event.
     """
-    state = build_state(event, spec_lookup)
+    state      = build_state(event, spec_lookup)
     path_taken = []
 
     try:
         for step in workflow.stream(state):
-            node = list(step.keys())[0]
+            node  = list(step.keys())[0]
             state = list(step.values())[0]
             path_taken.append(node)
 
@@ -127,48 +121,63 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
         # Use dict.get() for all field access after the stream loop.
         agent_result = state.get("agent_result") or {}
         return {
-            "event_id": event.event_id,
-            "joint": event.joint,
-            "validation": state.get("validation"),
-            "severity": state.get("severity"),
+            "event_id":        event.event_id,
+            "joint":           event.joint,
+            "validation":      state.get("validation"),
+            "severity":        state.get("severity"),
             "safety_critical": state.get("safety_critical"),
-            "path": path_taken,
-            "action": agent_result.get("status"),
-            "error": None,
+            "path":            path_taken,
+            "action":          agent_result.get("status"),
+            "error":           None,
         }
 
     except Exception as exc:
         # state may be a dict (if stream started) or IncidentState (if it
         # failed before the first step). Handle both.
-        sc = (
-            state.get("safety_critical")
-            if isinstance(state, dict)
-            else state.safety_critical
-        )
+        sc = state.get("safety_critical") if isinstance(state, dict) else state.safety_critical
         return {
-            "event_id": event.event_id,
-            "joint": event.joint,
-            "validation": None,
-            "severity": None,
+            "event_id":        event.event_id,
+            "joint":           event.joint,
+            "validation":      None,
+            "severity":        None,
             "safety_critical": sc,
-            "path": path_taken,
-            "action": "ERROR",
-            "error": str(exc),
+            "path":            path_taken,
+            "action":          "ERROR",
+            "error":           str(exc),
         }
+
+
+# ── Detailed runner (for event inspector UI) ─────────────────────────────────
+
+def run_event_detailed(workflow, event, spec_lookup: dict) -> tuple[list, str | None]:
+    """
+    Like run_event but returns the full step-by-step states for each node.
+    Used by the event inspector UI to show what happened at each stage.
+
+    Returns:
+        steps: list of {"node": str, "state": dict} for each completed node
+        error: error message string if the run failed, else None
+    """
+    state = build_state(event, spec_lookup)
+    steps = []
+    try:
+        for step in workflow.stream(state):
+            node       = list(step.keys())[0]
+            node_state = list(step.values())[0]
+            steps.append({"node": node, "state": dict(node_state)})
+        return steps, None
+    except Exception as exc:
+        return steps, str(exc)
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
-
 def main():
 
     # ── CLI args ───────────────────────────────────────────────────────────────
-    parser = argparse.ArgumentParser(
-        description="Torque Incident Management Batch Runner"
-    )
+    parser = argparse.ArgumentParser(description="Torque Incident Management Batch Runner")
     parser.add_argument(
-        "--verbose",
-        "-v",
+        "--verbose", "-v",
         action="store_true",
         default=False,
         help="Enable debug logging — shows agent reasoning, RAG context, tool calls.",
@@ -189,7 +198,7 @@ def main():
         print(f"[INIT] Processing all {len(df)} events")
 
     print("[INIT] Building vector stores...")
-    vectorstore = build_vector_store("data/sop_chunks.json")
+    vectorstore          = build_vector_store("data/sop_chunks.json")
     incident_vectorstore = build_incident_vector_store("data/past_incidents.json")
 
     print("[INIT] Building spec lookup...")
@@ -203,7 +212,7 @@ def main():
 
     # Derive batch label from first/last event IDs for folder naming
     first_id = df.iloc[0]["event_id"]
-    last_id = df.iloc[-1]["event_id"]
+    last_id  = df.iloc[-1]["event_id"]
     batch_label = f"batch_{first_id}_to_{last_id}"
 
     # ── Batch loop ─────────────────────────────────────────────────────────────
@@ -212,14 +221,14 @@ def main():
     results = []
 
     for i, (_, row) in enumerate(df.iterrows(), start=1):
-        event = event_from_row(row)
+        event  = event_from_row(row)
         result = run_event(workflow, event, spec_lookup)
         results.append(result)
 
         # Single compact status line per event — always visible regardless of
         # verbose flag, so you can watch the batch progress in real time.
         path_str = " -> ".join(result["path"])
-        status = (
+        status   = (
             f"[{i:>4}/{total}] {result['event_id']}  "
             f"{result['joint']:<30}  "
             f"{result['validation'] or 'ERROR':<15}  "
@@ -233,9 +242,9 @@ def main():
             print(status)
 
     # ── End of run summary ─────────────────────────────────────────────────────
-    errors = sum(1 for r in results if r["error"])
+    errors      = sum(1 for r in results if r["error"])
     auto_closed = sum(1 for r in results if "auto_close" in r["path"])
-    llm_used = total - auto_closed - errors
+    llm_used    = total - auto_closed - errors
 
     print(f"\n[DONE] {total} events processed")
     print(f"       auto-closed (no LLM) : {auto_closed}")

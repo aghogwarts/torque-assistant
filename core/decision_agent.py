@@ -19,7 +19,6 @@ if not api_key:
 
 # ── LangChain tool wrappers ───────────────────────────────────────────────────
 
-
 @tool
 def escalation_tool(event_id: str, reason: str):
     """Create an escalation ticket for a critical incident."""
@@ -54,7 +53,8 @@ llm_with_tools = llm.bind_tools(tools)
 
 # ── Prompt ────────────────────────────────────────────────────────────────────
 
-prompt = ChatPromptTemplate.from_template("""
+prompt = ChatPromptTemplate.from_template(
+    """
 You are a manufacturing incident decision agent.
 
 Your task is to analyze a torque incident and determine the correct operational action.
@@ -87,18 +87,18 @@ Decision Rules
 Safety Critical describes the JOINT, not the event outcome.
 An OK reading on a safety-critical joint means the tightening was correct — do not escalate it.
 
-If validation is OK (any joint, any safety_critical value) → close_tool
-If validation is not OK AND safety_critical is False         → rework_tool
-If validation is not OK AND safety_critical is True          → escalation_tool
-If validation is not OK AND safety_critical is UNKNOWN       → escalation_tool (fail-safe)
+If validation is OK (any joint, any safety_critical value) -> close_tool
+If validation is not OK AND safety_critical is False         -> rework_tool
+If validation is not OK AND safety_critical is True          -> escalation_tool
+If validation is not OK AND safety_critical is UNKNOWN       -> escalation_tool (fail-safe)
 
 You must call exactly one tool using the tool-calling mechanism.
 Do not write JSON or code blocks — invoke the tool directly.
-""")
+"""
+)
 
 
 # ── Agent runner ──────────────────────────────────────────────────────────────
-
 
 def run_decision_agent(event, validation, context, incident_context):
 
@@ -131,10 +131,13 @@ def run_decision_agent(event, validation, context, incident_context):
     response = llm_with_tools.invoke(formatted_prompt)
 
     finish_reason = response.response_metadata["finish_reason"]
-    logger.debug("[AGENT] Finish reason → %s", finish_reason)
+    logger.debug("[AGENT] Finish reason -> %s", finish_reason)
 
     if response.content:
         logger.debug("\nAgent Reasoning:\n%s", response.content)
+
+    # Capture reasoning for the event inspector UI before returning.
+    reasoning = response.content or ""
 
     if response.tool_calls:
         tool_call = response.tool_calls[0]
@@ -142,14 +145,14 @@ def run_decision_agent(event, validation, context, incident_context):
         tool_args = tool_call["args"]
 
         logger.debug("\nAgent Decision:")
-        logger.debug("  Tool selected → %s", tool_name)
-        logger.debug("  Arguments → %s", tool_args)
+        logger.debug("  Tool selected -> %s", tool_name)
+        logger.debug("  Arguments -> %s", tool_args)
         logger.debug("\nExecuting tool...\n")
 
         for t in tools:
             if t.name == tool_name:
                 result = t.invoke(tool_args)
-                return result
+                return result, reasoning
 
     logger.debug("\n[AGENT] No tool selected")
-    return None
+    return None, reasoning
