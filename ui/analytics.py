@@ -45,14 +45,14 @@ def render(resources: dict):
     col_left, col_right = st.columns(2)
 
     with col_left:
-        st.plotly_chart(_chart_validation(results), use_container_width=True)
-        st.plotly_chart(_chart_actions(results, run_log), use_container_width=True)
-        st.plotly_chart(_chart_faults_by_joint(results), use_container_width=True)
+        st.plotly_chart(_chart_validation(results), width='stretch')
+        st.plotly_chart(_chart_actions(results, run_log), width='stretch')
+        st.plotly_chart(_chart_faults_by_joint(results), width='stretch')
 
     with col_right:
-        st.plotly_chart(_chart_severity(results), use_container_width=True)
-        st.plotly_chart(_chart_routing(results), use_container_width=True)
-        st.plotly_chart(_chart_safety_split(results), use_container_width=True)
+        st.plotly_chart(_chart_severity(results), width='stretch')
+        st.plotly_chart(_chart_routing(results), width='stretch')
+        st.plotly_chart(_chart_safety_split(results), width='stretch')
 
     st.divider()
 
@@ -334,7 +334,7 @@ def _render_drift_timeline(df_raw: pd.DataFrame):
             )
 
     fig.update_layout(**PLOTLY_LAYOUT, title="Torque Readings Over Time (with target bands)")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 
 # ── Results table ─────────────────────────────────────────────────────────────
@@ -374,5 +374,5 @@ def _render_results_table(results: list):
     if action_filter:
         df_display = df_display[df_display["Action"].isin(action_filter)]
 
-    st.dataframe(df_display, use_container_width=True, hide_index=True)
+    st.dataframe(df_display, width='stretch', hide_index=True)
     st.caption(f"{len(df_display)} rows shown.")

@@ -43,7 +43,7 @@ def render(resources: dict):
         st.dataframe(
             batch_df[["event_id", "timestamp", "joint", "vehicle_model",
                        "tool_id", "actual_torque_nm", "result"]].head(10),
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
         )
 
@@ -63,7 +63,7 @@ def render(resources: dict):
             "Run Batch",
             type="primary",
             disabled=st.session_state.get("running", False),
-            use_container_width=True,
+            width='stretch',
         )
 
     # ── Execute ───────────────────────────────────────────────────────────────
@@ -167,7 +167,7 @@ def _execute_batch(batch_df, workflow, spec_lookup, verbose):
 
         # Live results table (last 15 rows for readability)
         display_df = _results_to_display_df(results[-15:])
-        table_slot.dataframe(display_df, use_container_width=True, hide_index=True)
+        table_slot.dataframe(display_df, width='stretch', hide_index=True)
 
     progress_bar.progress(1.0, text="Complete.")
 
@@ -217,7 +217,7 @@ def _show_summary(results: list):
                 unsafe_allow_html=True)
     st.dataframe(
         _results_to_display_df(results),
-        use_container_width=True,
+        width='stretch',
         hide_index=True,
     )
 

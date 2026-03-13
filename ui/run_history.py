@@ -14,6 +14,23 @@ import streamlit as st
 from ui.styles import inject_css
 
 
+def _safe_read(path: str) -> str:
+    """
+    Read a text file trying utf-8 first, falling back to cp1252.
+    Needed because report files written before the encoding fix may be cp1252
+    (Windows default) while newer ones are utf-8.
+    """
+    for enc in ("utf-8", "cp1252", "latin-1"):
+        try:
+            with open(path, encoding=enc) as f:
+                return f.read()
+        except (UnicodeDecodeError, LookupError):
+            continue
+    # Last resort — replace undecodable bytes
+    with open(path, encoding="utf-8", errors="replace") as f:
+        return f.read()
+
+
 def render(resources: dict):
     inject_css()
 
@@ -58,35 +75,32 @@ def render(resources: dict):
 
     with dcol1:
         if os.path.exists(json_path):
-            with open(json_path, encoding="utf-8") as f:
-                st.download_button(
+            st.download_button(
                     "Download JSON",
-                    f.read(),
+                    _safe_read(json_path),
                     file_name=f"{selected_run}_report.json",
                     mime="application/json",
-                    use_container_width=True,
+                    width='stretch',
                 )
 
     with dcol2:
         if os.path.exists(csv_path):
-            with open(csv_path, encoding="utf-8") as f:
-                st.download_button(
+            st.download_button(
                     "Download CSV",
-                    f.read(),
+                    _safe_read(csv_path),
                     file_name=f"{selected_run}_report.csv",
                     mime="text/csv",
-                    use_container_width=True,
+                    width='stretch',
                 )
 
     with dcol3:
         if os.path.exists(txt_path):
-            with open(txt_path, encoding="utf-8") as f:
-                st.download_button(
+            st.download_button(
                     "Download TXT",
-                    f.read(),
+                    _safe_read(txt_path),
                     file_name=f"{selected_run}_report.txt",
                     mime="text/plain",
-                    use_container_width=True,
+                    width='stretch',
                 )
 
     st.divider()
@@ -94,8 +108,7 @@ def render(resources: dict):
     # ── TXT summary ───────────────────────────────────────────────────────────
     st.markdown('<div class="section-header">Run Summary</div>', unsafe_allow_html=True)
     if os.path.exists(txt_path):
-        with open(txt_path, encoding="utf-8") as f:
-            txt_content = f.read()
+        txt_content = _safe_read(txt_path)
         st.code(txt_content, language=None)
     else:
         st.warning("report.txt not found for this run.")
@@ -106,7 +119,7 @@ def render(resources: dict):
     st.markdown('<div class="section-header">Results Table</div>', unsafe_allow_html=True)
     if os.path.exists(csv_path):
         df = pd.read_csv(csv_path)
-        st.dataframe(df, use_container_width=True, hide_index=True)
+        st.dataframe(df, width='stretch', hide_index=True)
         st.caption(f"{len(df)} events in this run.")
     else:
         st.warning("report.csv not found for this run.")
@@ -117,8 +130,7 @@ def render(resources: dict):
     st.markdown('<div class="section-header">Statistics (from JSON)</div>',
                 unsafe_allow_html=True)
     if os.path.exists(json_path):
-        with open(json_path, encoding="utf-8") as f:
-            data = json.load(f)
+        data = json.loads(_safe_read(json_path))
         summary = data.get("summary", {})
 
         col1, col2 = st.columns(2)
