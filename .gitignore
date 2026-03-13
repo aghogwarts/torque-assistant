@@ -5,6 +5,7 @@ vector_index/
 old/
 run_reports/
 secret.txt
+.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
