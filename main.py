@@ -122,8 +122,19 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
 
         # LangGraph stream yields state as a plain dict, not as IncidentState.
         # Use dict.get() for all field access after the stream loop.
+        # However, nested Pydantic objects (like AgentDecision) may survive
+        # as their original type — handle both dict and object access.
         agent_result = state.get("agent_result") or {}
-        agent_decision = state.get("agent_decision") or {}
+        raw_decision = state.get("agent_decision")
+
+        # Normalize to dict — AgentDecision may be a Pydantic object or a dict
+        if raw_decision is None:
+            agent_decision = {}
+        elif isinstance(raw_decision, dict):
+            agent_decision = raw_decision
+        else:
+            # Pydantic object — convert to dict
+            agent_decision = raw_decision.model_dump() if hasattr(raw_decision, "model_dump") else raw_decision.__dict__
 
         return {
             "event_id":               event.event_id,
@@ -132,7 +143,7 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
             "severity":               state.get("severity"),
             "safety_critical":        state.get("safety_critical"),
             "path":                   path_taken,
-            "action":                 agent_result.get("status"),
+            "action":                 agent_result.get("status") if isinstance(agent_result, dict) else getattr(agent_result, "status", None),
             "error":                  None,
             # v2 structured decision fields
             "confidence":             agent_decision.get("confidence"),
@@ -242,15 +253,30 @@ def main():
         result = run_event(workflow, event, spec_lookup)
         results.append(result)
 
-        # Single compact status line per event — always visible regardless of
-        # verbose flag, so you can watch the batch progress in real time.
-        path_str = " -> ".join(result["path"])
-        status   = (
-            f"[{i:>4}/{total}] {result['event_id']}  "
+        # ── Status line ───────────────────────────────────────────────────────
+        # Compact but readable. Shows action + confidence for agent-processed events.
+        validation = result["validation"] or "ERROR"
+        severity   = result["severity"] or ""
+        action     = result["action"] or ""
+        confidence = result.get("confidence")
+
+        # Color-code the action for terminal readability
+        if action == "ESCALATED":
+            action_str = f"ESCALATED"
+        elif action == "REWORK_LOGGED":
+            action_str = f"REWORK"
+        elif action == "CLOSED":
+            action_str = f"CLOSED"
+        else:
+            action_str = action
+
+        # Build the status line
+        conf_str = f" ({confidence:.0%})" if confidence is not None else ""
+        status = (
+            f"  [{i:>4}/{total}]  {result['event_id']}  "
             f"{result['joint']:<30}  "
-            f"{result['validation'] or 'ERROR':<15}  "
-            f"{result['severity'] or '':<8}  "
-            f"{path_str}"
+            f"{validation:<15}  {severity:<8}  "
+            f"{action_str}{conf_str}"
         )
 
         if result["error"]:
@@ -258,16 +284,44 @@ def main():
         else:
             print(status)
 
+        # Show reasoning on a second line for agent-processed events (non-verbose)
+        reasoning = result.get("reasoning")
+        if reasoning and not result["error"] and "auto_close" not in result["path"]:
+            # Truncate long reasoning to one line
+            short = reasoning[:120] + "..." if len(reasoning) > 120 else reasoning
+            print(f"           └─ {short}")
+
     # ── End of run summary ─────────────────────────────────────────────────────
     errors      = sum(1 for r in results if r["error"])
     auto_closed = sum(1 for r in results if "auto_close" in r["path"])
     llm_used    = total - auto_closed - errors
 
-    print(f"\n[DONE] {total} events processed")
-    print(f"       auto-closed (no LLM) : {auto_closed}")
-    print(f"       full path (LLM used) : {llm_used}")
+    print()
+    print("=" * 80)
+    print("  BATCH COMPLETE")
+    print("=" * 80)
+    print(f"  Total events       : {total}")
+    print(f"  Auto-closed (fast) : {auto_closed}")
+    print(f"  Agent-processed    : {llm_used}")
     if errors:
-        print(f"       errors               : {errors}")
+        print(f"  Errors             : {errors}")
+    print()
+
+    # Show agent decisions summary
+    agent_results = [r for r in results if r.get("reasoning") and not r["error"]]
+    if agent_results:
+        print("  AGENT DECISIONS:")
+        print("  " + "-" * 76)
+        for r in agent_results:
+            conf = r.get("confidence")
+            conf_str = f"{conf:.0%}" if conf else "?"
+            flag = " ⚠ NEEDS REVIEW" if conf is not None and conf < 0.90 else ""
+            print(f"  {r['event_id']}  {r['joint']:<28}  {r['action']:<12}  {r['severity']:<8}  conf={conf_str}{flag}")
+            if r.get("root_cause_hypothesis") and r["root_cause_hypothesis"] != "N/A":
+                rch = r["root_cause_hypothesis"]
+                short_rch = rch[:100] + "..." if len(rch) > 100 else rch
+                print(f"    Root cause: {short_rch}")
+        print()
 
     # ── Save report ────────────────────────────────────────────────────────────
     save_report(results, RUN_LOG, batch_label)
