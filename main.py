@@ -89,6 +89,9 @@ def build_state(event, spec_lookup: dict) -> IncidentState:
     return IncidentState(
         event_id=event.event_id,
         joint=event.joint,
+        vehicle_model=event.vehicle_model,
+        station=event.station,
+        tool_id=event.tool_id,
         target_torque_nm=event.target_torque_nm,
         actual_torque_nm=event.actual_torque_nm,
         tolerance_nm=event.tolerance_nm,
@@ -120,15 +123,23 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
         # LangGraph stream yields state as a plain dict, not as IncidentState.
         # Use dict.get() for all field access after the stream loop.
         agent_result = state.get("agent_result") or {}
+        agent_decision = state.get("agent_decision") or {}
+
         return {
-            "event_id":        event.event_id,
-            "joint":           event.joint,
-            "validation":      state.get("validation"),
-            "severity":        state.get("severity"),
-            "safety_critical": state.get("safety_critical"),
-            "path":            path_taken,
-            "action":          agent_result.get("status"),
-            "error":           None,
+            "event_id":               event.event_id,
+            "joint":                  event.joint,
+            "validation":             state.get("validation"),
+            "severity":               state.get("severity"),
+            "safety_critical":        state.get("safety_critical"),
+            "path":                   path_taken,
+            "action":                 agent_result.get("status"),
+            "error":                  None,
+            # v2 structured decision fields
+            "confidence":             agent_decision.get("confidence"),
+            "reasoning":              agent_decision.get("reasoning"),
+            "root_cause_hypothesis":  agent_decision.get("root_cause_hypothesis"),
+            "recommended_corrective": agent_decision.get("recommended_corrective"),
+            "sop_references":         agent_decision.get("sop_references"),
         }
 
     except Exception as exc:
@@ -136,14 +147,20 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
         # failed before the first step). Handle both.
         sc = state.get("safety_critical") if isinstance(state, dict) else state.safety_critical
         return {
-            "event_id":        event.event_id,
-            "joint":           event.joint,
-            "validation":      None,
-            "severity":        None,
-            "safety_critical": sc,
-            "path":            path_taken,
-            "action":          "ERROR",
-            "error":           str(exc),
+            "event_id":               event.event_id,
+            "joint":                  event.joint,
+            "validation":             None,
+            "severity":               None,
+            "safety_critical":        sc,
+            "path":                   path_taken,
+            "action":                 "ERROR",
+            "error":                  str(exc),
+            # v2 structured decision fields
+            "confidence":             None,
+            "reasoning":              None,
+            "root_cause_hypothesis":  None,
+            "recommended_corrective": None,
+            "sop_references":         None,
         }
 
 

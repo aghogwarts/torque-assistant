@@ -116,6 +116,8 @@ def _write_csv(results: list[dict], path: str):
     """
     Flat tabular export — one row per event.
     'path' column is the node sequence joined by ' -> '.
+    Includes v2 agent decision fields: confidence, reasoning, root cause,
+    recommended corrective, SOP references.
     """
     if not results:
         return
@@ -128,6 +130,11 @@ def _write_csv(results: list[dict], path: str):
         "safety_critical",
         "path",
         "action",
+        "confidence",
+        "reasoning",
+        "root_cause_hypothesis",
+        "recommended_corrective",
+        "sop_references",
         "error",
     ]
 
@@ -135,6 +142,7 @@ def _write_csv(results: list[dict], path: str):
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for r in results:
+            sop_refs = r.get("sop_references") or []
             writer.writerow(
                 {
                     "event_id": r["event_id"],
@@ -144,6 +152,11 @@ def _write_csv(results: list[dict], path: str):
                     "safety_critical": r["safety_critical"],
                     "path": " -> ".join(r["path"]),
                     "action": r["action"] or "",
+                    "confidence": r.get("confidence") or "",
+                    "reasoning": r.get("reasoning") or "",
+                    "root_cause_hypothesis": r.get("root_cause_hypothesis") or "",
+                    "recommended_corrective": r.get("recommended_corrective") or "",
+                    "sop_references": "; ".join(sop_refs) if sop_refs else "",
                     "error": r["error"] or "",
                 }
             )
@@ -252,7 +265,7 @@ def _write_txt(results: list[dict], run_log: list[dict], path: str, batch_label:
     # ── Actions taken ─────────────────────────────────────────────────────────
     ln("ACTIONS TAKEN")
     ln("-" * 40)
-    ln(f"  Actions are the tool calls executed by the decision agent or the")
+    ln(f"  Actions are determined by the decision agent's reasoning or the")
     ln(f"  auto-close fast path.")
     ln()
     for action, count in s["actions"].items():
@@ -270,6 +283,32 @@ def _write_txt(results: list[dict], run_log: list[dict], path: str, batch_label:
         for r in s["reworks"]:
             ln(f"    {r['event_id']}  —  {r['detail']}")
         ln()
+
+    # ── Agent decision details (v2) ───────────────────────────────────────────
+    # Show per-event reasoning for all non-auto-closed events that have
+    # agent decision data.
+    decided_events = [r for r in results
+                      if r.get("reasoning") and "auto_close" not in r["path"]]
+    if decided_events:
+        ln("AGENT DECISION DETAILS")
+        ln("-" * 40)
+        ln(f"  Per-event reasoning from the decision agent for {len(decided_events)} event(s).")
+        ln()
+        for r in decided_events:
+            conf = r.get("confidence")
+            conf_str = f"{conf:.0%}" if conf is not None else "N/A"
+            flag = "  ⚠ LOW CONFIDENCE" if conf is not None and conf < 0.90 else ""
+            ln(f"  {r['event_id']}  |  {r['joint']}")
+            ln(f"    Action: {r.get('action', '?')}  |  Severity: {r.get('severity', '?')}  |  Confidence: {conf_str}{flag}")
+            ln(f"    Reasoning: {r.get('reasoning', 'N/A')}")
+            rch = r.get("root_cause_hypothesis", "")
+            if rch and rch != "N/A":
+                ln(f"    Root Cause: {rch}")
+            rc = r.get("recommended_corrective", "")
+            if rc and rc != "N/A":
+                ln(f"    Recommended: {rc}")
+            ln()
+    ln()
 
     # ── Unknown joints ────────────────────────────────────────────────────────
     if s["unknown_joints"]:

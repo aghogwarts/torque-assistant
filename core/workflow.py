@@ -6,6 +6,7 @@ from core.workflow_nodes import (
     create_rag_node,
     create_incident_rag_node,
     agent_node,
+    finalize_node,
 )
 
 
@@ -42,6 +43,7 @@ def build_workflow(vectorstore, incident_vectorstore):
     graph.add_node("rag", rag_node)
     graph.add_node("rag_incidents", incident_rag_node)
     graph.add_node("agent", agent_node)
+    graph.add_node("finalize", finalize_node)
 
     graph.set_entry_point("validate")
 
@@ -58,6 +60,7 @@ def build_workflow(vectorstore, incident_vectorstore):
     graph.add_edge("auto_close", END)
     graph.add_edge("rag", "rag_incidents")
     graph.add_edge("rag_incidents", "agent")
-    graph.add_edge("agent", END)
+    graph.add_edge("agent", "finalize")
+    graph.add_edge("finalize", END)
 
     return graph.compile()

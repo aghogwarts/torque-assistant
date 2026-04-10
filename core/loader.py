@@ -27,6 +27,9 @@ def event_from_row(row) -> TorqueEvent:
     return TorqueEvent(
         event_id=row["event_id"],
         joint=row["joint"],
+        vehicle_model=row.get("vehicle_model", ""),
+        station=row.get("station", ""),
+        tool_id=row.get("tool_id", ""),
         target_torque_nm=float(row["target_torque_nm"]),
         tolerance_nm=float(row["tolerance_nm"]),
         actual_torque_nm=float(row["actual_torque_nm"]),

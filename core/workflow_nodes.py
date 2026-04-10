@@ -2,7 +2,7 @@ import logging
 from core.validator import validate_torque
 from core.rag import retrieve_context, retrieve_incident_context
 from core.decision_agent import run_decision_agent
-from core.tools import close_incident
+from core.tools import create_escalation_ticket, log_rework, close_incident
 
 logger = logging.getLogger("torque.nodes")
 
@@ -18,8 +18,8 @@ def validation_node(state):
 def auto_close_node(state):
     """
     Fast-path for OK events on non-safety-critical joints (LOW severity).
-    Calls close_incident() directly — same function the agent uses via
-    close_tool — so any future changes to close_incident() cover both paths.
+    Calls close_incident() directly — same function the finalize node uses —
+    so any future changes to close_incident() cover both paths.
     No RAG calls, no LLM call.
     """
     logger.debug("[AUTO-CLOSE] %s | %s | OK + LOW severity", state.event_id, state.joint)
@@ -51,9 +51,67 @@ def create_incident_rag_node(vectorstore):
 
 
 def agent_node(state):
-    result, reasoning = run_decision_agent(
-        state, state.validation, state.rag_context, state.incident_context
-    )
+    """
+    v2 agent node: calls the reasoning-based decision agent which returns
+    a structured AgentDecision. No tool calls happen here — that's the
+    finalize node's job.
+
+    The agent's severity assessment overrides the validator's preliminary
+    severity (which was only used for routing to the auto-close path).
+    """
+    decision = run_decision_agent(state)
+
+    state.agent_decision = decision
+    state.agent_reasoning = decision.reasoning
+
+    # Agent's severity overrides the validator's preliminary severity
+    if decision.severity:
+        state.severity = decision.severity
+
+    logger.debug("[AGENT] %s -> action=%s severity=%s confidence=%.2f",
+                 state.event_id, decision.action, decision.severity, decision.confidence)
+    return state
+
+
+def finalize_node(state):
+    """
+    Executes the tool call based on the agent's decision.
+
+    Separating decision from execution enables:
+    - Human-in-the-loop checkpoint before execution (Phase 5)
+    - Audit logging of both the decision and the execution
+    - The agent's structured reasoning to be stored before any side effects
+
+    Maps agent actions to tool functions:
+        ESCALATE -> create_escalation_ticket()
+        REWORK   -> log_rework()
+        CLOSE    -> close_incident()
+    """
+    decision = state.agent_decision
+
+    if decision is None:
+        logger.warning("[FINALIZE] %s — no agent decision available, defaulting to ESCALATE", state.event_id)
+        result = create_escalation_ticket(state.event_id, "No agent decision — fail-safe escalation.")
+        state.agent_result = result
+        return state
+
+    action = decision.action.upper()
+
+    if action == "ESCALATE":
+        reason = decision.reasoning or "Escalated by decision agent."
+        result = create_escalation_ticket(state.event_id, reason)
+
+    elif action == "REWORK":
+        note = decision.recommended_corrective or decision.reasoning or "Rework logged by decision agent."
+        result = log_rework(state.event_id, note)
+
+    elif action == "CLOSE":
+        result = close_incident(state.event_id)
+
+    else:
+        logger.warning("[FINALIZE] %s — unknown action '%s', defaulting to ESCALATE", state.event_id, action)
+        result = create_escalation_ticket(state.event_id, f"Unknown agent action: {action}")
+
     state.agent_result = result
-    state.agent_reasoning = reasoning  # stored for event inspector UI
+    logger.debug("[FINALIZE] %s -> %s", state.event_id, result.get("status", "???"))
     return state

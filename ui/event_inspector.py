@@ -130,6 +130,7 @@ def _render_node(node: str, state: dict):
         "rag":          "2. SOP Retrieval",
         "rag_incidents":"3. Incident History Retrieval",
         "agent":        "4. Decision Agent",
+        "finalize":     "5. Finalize Action",
     }
     label = node_labels.get(node, node.upper())
 
@@ -144,6 +145,8 @@ def _render_node(node: str, state: dict):
             _render_rag_incidents(state)
         elif node == "agent":
             _render_agent(state)
+        elif node == "finalize":
+            _render_finalize(state)
 
 
 def _render_validate(state: dict):
@@ -203,22 +206,43 @@ def _render_rag_incidents(state: dict):
 
 
 def _render_agent(state: dict):
-    col1, col2 = st.columns(2)
-
+    """Render the v2 structured agent decision with all fields."""
+    decision = state.get("agent_decision") or {}
     result = state.get("agent_result") or {}
     action = result.get("status", "—")
-    reasoning = state.get("agent_reasoning", "")
+    reasoning = decision.get("reasoning") or state.get("agent_reasoning", "")
+    severity = decision.get("severity", "")
+    confidence = decision.get("confidence")
+
+    # ── Decision + Severity + Confidence row ──────────────────────────────
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         st.markdown("**Decision**")
         st.markdown(f"{_action_badge_html(action)}", unsafe_allow_html=True)
 
     with col2:
-        st.markdown("**Safety Critical**")
-        sc = state.get("safety_critical")
-        label = "Yes" if sc is True else ("No" if sc is False else "Unknown")
-        st.markdown(f"`{label}`")
+        st.markdown("**Agent Severity**")
+        if severity:
+            st.markdown(f"{_severity_badge_html(severity)}", unsafe_allow_html=True)
+        else:
+            st.markdown("`—`")
 
+    with col3:
+        st.markdown("**Confidence**")
+        if confidence is not None:
+            pct = f"{confidence:.0%}"
+            color = "#e74c3c" if confidence < 0.90 else "#27ae60"
+            flag = " ⚠ Needs Review" if confidence < 0.90 else ""
+            st.markdown(
+                f'<span style="color:{color}; font-weight:600;">{pct}</span>'
+                f'<span style="color:#e74c3c; font-size:0.85rem;">{flag}</span>',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown("`—`")
+
+    # ── Reasoning ─────────────────────────────────────────────────────────
     if reasoning:
         st.markdown("**Agent Reasoning**")
         st.markdown(
@@ -226,6 +250,44 @@ def _render_agent(state: dict):
             f'{reasoning}</div>',
             unsafe_allow_html=True,
         )
+
+    # ── Root Cause + Recommended Corrective ───────────────────────────────
+    root_cause = decision.get("root_cause_hypothesis", "")
+    corrective = decision.get("recommended_corrective", "")
+
+    if root_cause and root_cause != "N/A":
+        st.markdown("**Root Cause Hypothesis**")
+        st.markdown(
+            f'<div class="info-card">{root_cause}</div>',
+            unsafe_allow_html=True,
+        )
+
+    if corrective and corrective != "N/A":
+        st.markdown("**Recommended Corrective Action**")
+        st.markdown(
+            f'<div class="info-card">{corrective}</div>',
+            unsafe_allow_html=True,
+        )
+
+    # ── SOP References ────────────────────────────────────────────────────
+    sop_refs = decision.get("sop_references", [])
+    if sop_refs:
+        st.markdown("**SOP References**")
+        for ref in sop_refs:
+            st.markdown(f"- `{ref}`")
+
+    # ── Safety Critical ───────────────────────────────────────────────────
+    sc = state.get("safety_critical")
+    label = "Yes" if sc is True else ("No" if sc is False else "Unknown")
+    st.caption(f"Safety-Critical Joint: {label}")
+
+
+def _render_finalize(state: dict):
+    """Render the finalize step — shows which tool was executed."""
+    result = state.get("agent_result") or {}
+    action = result.get("status", "—")
+    st.markdown(f"**Executed Action:** {_action_badge_html(action)}", unsafe_allow_html=True)
+    st.caption("The finalize node executed the tool call based on the agent's decision above.")
 
 
 # ── Badge HTML helpers (inline, no extra import) ──────────────────────────────
