@@ -16,7 +16,7 @@ from core.reporter import save_report
 
 # Set to an int (e.g. 20) to cap the run during testing.
 # Set to None to process the full dataset.
-MAX_EVENTS = 40
+MAX_EVENTS = 22
 
 # ── Logging setup ─────────────────────────────────────────────────────────────
 

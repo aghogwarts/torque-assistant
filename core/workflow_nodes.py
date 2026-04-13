@@ -11,7 +11,7 @@ def validation_node(state):
     result, severity = validate_torque(state)
     state.validation = result
     state.severity = severity
-    logger.debug("[VALIDATE] %s -> %s | severity=%s", state.event_id, result, severity)
+    logger.debug("\n[VALIDATE] %s -> %s | severity=%s", state.event_id, result, severity)
     return state
 
 

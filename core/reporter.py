@@ -105,7 +105,7 @@ def _write_json(results: list[dict], run_log: list[dict], path: str):
         "events": results,
         "run_log": run_log,
     }
-    with open(path, "w") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
 
 
@@ -336,5 +336,5 @@ def _write_txt(results: list[dict], run_log: list[dict], path: str, batch_label:
     ln("  END OF REPORT")
     ln("=" * 70)
 
-    with open(path, "w") as f:
+    with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))

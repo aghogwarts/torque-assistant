@@ -218,13 +218,13 @@ def run_decision_agent(state) -> AgentDecision:
         trend_context=trend_str,
     )
 
-    logger.debug("[AGENT] Sending prompt to model (%s)...", MODEL)
+    logger.debug("\n[AGENT] Sending prompt to model (%s)...", MODEL)
 
     response = llm.invoke(formatted)
     raw = response.content or ""
 
     logger.debug("[AGENT] Raw response length: %d chars", len(raw))
-    logger.debug("[AGENT] Raw response:\n%s", raw[:500])
+    # logger.debug("[AGENT] Raw response:\n%s", raw[:500])
 
     decision = _parse_decision(raw)
 
