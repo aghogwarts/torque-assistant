@@ -1,6 +1,5 @@
 import logging
 from core.validator import validate_torque
-from core.rag import retrieve_context, retrieve_incident_context
 from core.decision_agent import run_decision_agent
 from core.tools import create_escalation_ticket, log_rework, close_incident
 
@@ -11,7 +10,8 @@ def validation_node(state):
     result, severity = validate_torque(state)
     state.validation = result
     state.severity = severity
-    logger.debug("\n[VALIDATE] %s -> %s | severity=%s", state.event_id, result, severity)
+    logger.debug("")
+    logger.debug("[VALIDATE]  %s  →  %s  |  severity: %s", state.event_id, result, severity)
     return state
 
 
@@ -22,29 +22,39 @@ def auto_close_node(state):
     so any future changes to close_incident() cover both paths.
     No RAG calls, no LLM call.
     """
-    logger.debug("[AUTO-CLOSE] %s | %s | OK + LOW severity", state.event_id, state.joint)
+    logger.debug("[AUTO-CLOSE]  %s  |  %s  |  OK + LOW → closed without LLM", state.event_id, state.joint)
     result = close_incident(state.event_id)
     state.agent_result = result
     return state
 
 
-def create_rag_node(vectorstore):
+def create_rag_node(sop_store):
     def rag_node(state):
-        query = f"{state.joint} {state.validation}"
-        context = retrieve_context(vectorstore, query)
+        from core.rag import retrieve_context
+        context = retrieve_context(
+            sop_store,
+            joint=state.joint,
+            vehicle_model=state.vehicle_model,
+            validation=state.validation or "",
+        )
         state.rag_context = context
-        logger.debug("[RAG] %s -> retrieved %d SOP chunks", state.event_id, len(context))
+        logger.debug("[RAG-SOP]     %s  →  retrieved %d SOP chunks", state.event_id, len(context))
         return state
 
     return rag_node
 
 
-def create_incident_rag_node(vectorstore):
+def create_incident_rag_node(incident_store):
     def incident_rag_node(state):
-        query = f"{state.joint} {state.validation}"
-        context = retrieve_incident_context(vectorstore, query)
+        from core.rag import retrieve_incident_context
+        context = retrieve_incident_context(
+            incident_store,
+            joint=state.joint,
+            tool_id=state.tool_id,
+            validation=state.validation or "",
+        )
         state.incident_context = context
-        logger.debug("[RAG-INC] %s -> retrieved %d incident chunks", state.event_id, len(context))
+        logger.debug("[RAG-INC]     %s  →  retrieved %d incident chunks", state.event_id, len(context))
         return state
 
     return incident_rag_node
@@ -68,8 +78,6 @@ def agent_node(state):
     if decision.severity:
         state.severity = decision.severity
 
-    logger.debug("[AGENT] %s -> action=%s severity=%s confidence=%.2f",
-                 state.event_id, decision.action, decision.severity, decision.confidence)
     return state
 
 
@@ -113,5 +121,7 @@ def finalize_node(state):
         result = create_escalation_ticket(state.event_id, f"Unknown agent action: {action}")
 
     state.agent_result = result
-    logger.debug("[FINALIZE] %s -> %s", state.event_id, result.get("status", "???"))
+    logger.debug("")
+    logger.debug("[FINALIZE]    %s  →  %s", state.event_id, result.get("status", "???"))
+    logger.debug("")
     return state

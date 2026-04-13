@@ -37,7 +37,7 @@ def setup_logging(verbose: bool):
         level=level,
     )
     # Suppress noisy third-party loggers regardless of verbose flag
-    for noisy in ("httpx", "openai", "httpcore", "langchain", "faiss"):
+    for noisy in ("httpx", "openai", "httpcore", "langchain", "chromadb"):
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
 

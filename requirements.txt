@@ -3,7 +3,9 @@ pydantic
 black
 python-dotenv
 
-faiss-cpu
+#faiss-cpu
+chromadb
+langchain-chroma
 
 langchain-openai
 langchain-community
