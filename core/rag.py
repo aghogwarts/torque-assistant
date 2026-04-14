@@ -128,12 +128,12 @@ def build_vector_store(path: str) -> SOPStore:
         ids.append(chunk["chunk_id"])
         metadatas.append({
             "chunk_id": chunk["chunk_id"],
-            "chunk_type": chunk.get("chunk_type", ""),
             "sop_id": chunk.get("sop_id", ""),
             "joint": chunk.get("joint", ""),
             "vehicle_model": chunk.get("vehicle_model", ""),
             "station": chunk.get("station", ""),
             "tightening_method": chunk.get("tightening_method", ""),
+            "tool_recommendation": chunk.get("tool_recommendation", ""),
             "safety_critical": str(chunk.get("safety_critical", "")),
         })
 
