@@ -11,12 +11,14 @@ from core.workflow import build_workflow
 from core.state import IncidentState
 from core.tools import RUN_LOG, clear_run_log
 from core.reporter import save_report
+from core.trend import TrendDetector
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
 # Set to an int (e.g. 20) to cap the run during testing.
 # Set to None to process the full dataset.
-MAX_EVENTS = 22
+MAX_EVENTS = 330
+
 
 # ── Logging setup ─────────────────────────────────────────────────────────────
 
@@ -33,7 +35,7 @@ def setup_logging(verbose: bool):
     """
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(
-        format="%(message)s",   # keep it clean — no timestamps in console output
+        format="%(message)s",  # keep it clean — no timestamps in console output
         level=level,
     )
     # Suppress noisy third-party loggers regardless of verbose flag
@@ -111,12 +113,12 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
     does not abort the entire batch — the error is recorded in the result
     and the loop continues with the next event.
     """
-    state      = build_state(event, spec_lookup)
+    state = build_state(event, spec_lookup)
     path_taken = []
 
     try:
         for step in workflow.stream(state):
-            node  = list(step.keys())[0]
+            node = list(step.keys())[0]
             state = list(step.values())[0]
             path_taken.append(node)
 
@@ -137,20 +139,21 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
             agent_decision = raw_decision.model_dump() if hasattr(raw_decision, "model_dump") else raw_decision.__dict__
 
         return {
-            "event_id":               event.event_id,
-            "joint":                  event.joint,
-            "validation":             state.get("validation"),
-            "severity":               state.get("severity"),
-            "safety_critical":        state.get("safety_critical"),
-            "path":                   path_taken,
-            "action":                 agent_result.get("status") if isinstance(agent_result, dict) else getattr(agent_result, "status", None),
-            "error":                  None,
+            "event_id": event.event_id,
+            "joint": event.joint,
+            "validation": state.get("validation"),
+            "severity": state.get("severity"),
+            "safety_critical": state.get("safety_critical"),
+            "path": path_taken,
+            "action": agent_result.get("status") if isinstance(agent_result, dict) else getattr(agent_result, "status",
+                                                                                                None),
+            "error": None,
             # v2 structured decision fields
-            "confidence":             agent_decision.get("confidence"),
-            "reasoning":              agent_decision.get("reasoning"),
-            "root_cause_hypothesis":  agent_decision.get("root_cause_hypothesis"),
+            "confidence": agent_decision.get("confidence"),
+            "reasoning": agent_decision.get("reasoning"),
+            "root_cause_hypothesis": agent_decision.get("root_cause_hypothesis"),
             "recommended_corrective": agent_decision.get("recommended_corrective"),
-            "sop_references":         agent_decision.get("sop_references"),
+            "sop_references": agent_decision.get("sop_references"),
         }
 
     except Exception as exc:
@@ -158,20 +161,20 @@ def run_event(workflow, event, spec_lookup: dict) -> dict:
         # failed before the first step). Handle both.
         sc = state.get("safety_critical") if isinstance(state, dict) else state.safety_critical
         return {
-            "event_id":               event.event_id,
-            "joint":                  event.joint,
-            "validation":             None,
-            "severity":               None,
-            "safety_critical":        sc,
-            "path":                   path_taken,
-            "action":                 "ERROR",
-            "error":                  str(exc),
+            "event_id": event.event_id,
+            "joint": event.joint,
+            "validation": None,
+            "severity": None,
+            "safety_critical": sc,
+            "path": path_taken,
+            "action": "ERROR",
+            "error": str(exc),
             # v2 structured decision fields
-            "confidence":             None,
-            "reasoning":              None,
-            "root_cause_hypothesis":  None,
+            "confidence": None,
+            "reasoning": None,
+            "root_cause_hypothesis": None,
             "recommended_corrective": None,
-            "sop_references":         None,
+            "sop_references": None,
         }
 
 
@@ -190,7 +193,7 @@ def run_event_detailed(workflow, event, spec_lookup: dict) -> tuple[list, str | 
     steps = []
     try:
         for step in workflow.stream(state):
-            node       = list(step.keys())[0]
+            node = list(step.keys())[0]
             node_state = list(step.values())[0]
             steps.append({"node": node, "state": dict(node_state)})
         return steps, None
@@ -201,7 +204,6 @@ def run_event_detailed(workflow, event, spec_lookup: dict) -> tuple[list, str | 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-
     # ── CLI args ───────────────────────────────────────────────────────────────
     parser = argparse.ArgumentParser(description="Torque Incident Management Batch Runner")
     parser.add_argument(
@@ -217,16 +219,23 @@ def main():
     clear_run_log()  # reset tool action log before each batch
 
     print("[INIT] Loading events...")
-    df = load_events("data/torque_events.csv")
+    df_full = load_events("data/torque_events.csv")
+
+    # TrendDetector needs the FULL dataset for historical context —
+    # SPC and pattern detection look backward across all prior events.
+    print("[INIT] Building trend detector...")
+    trend_detector = TrendDetector(df_full)
+    print(f"[INIT] Trend detector ready — {len(df_full)} events indexed")
 
     if MAX_EVENTS is not None:
-        df = df.head(MAX_EVENTS)
+        df = df_full.head(MAX_EVENTS)
         print(f"[INIT] MAX_EVENTS={MAX_EVENTS} — processing {len(df)} events")
     else:
+        df = df_full
         print(f"[INIT] Processing all {len(df)} events")
 
     print("[INIT] Building vector stores...")
-    vectorstore          = build_vector_store("data/sop_chunks.json")
+    vectorstore = build_vector_store("data/sop_chunks.json")
     incident_vectorstore = build_incident_vector_store("data/past_incidents.json")
 
     print("[INIT] Building spec lookup...")
@@ -234,13 +243,13 @@ def main():
     print(f"[INIT] {len(spec_lookup)} joints resolved from SOPs")
 
     print("[INIT] Compiling workflow...")
-    workflow = build_workflow(vectorstore, incident_vectorstore)
+    workflow = build_workflow(vectorstore, incident_vectorstore, trend_detector)
 
     total = len(df)
 
     # Derive batch label from first/last event IDs for folder naming
     first_id = df.iloc[0]["event_id"]
-    last_id  = df.iloc[-1]["event_id"]
+    last_id = df.iloc[-1]["event_id"]
     batch_label = f"batch_{first_id}_to_{last_id}"
 
     # ── Batch loop ─────────────────────────────────────────────────────────────

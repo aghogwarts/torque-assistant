@@ -3,6 +3,7 @@ from core.state import IncidentState
 from core.workflow_nodes import (
     validation_node,
     auto_close_node,
+    create_trend_node,
     create_rag_node,
     create_incident_rag_node,
     agent_node,
@@ -17,29 +18,26 @@ def route_after_validate(state: IncidentState) -> str:
     auto_close → OK result AND non-safety-critical joint (LOW severity)
                  No RAG, no LLM. close_incident() called directly.
 
-    rag        → everything else:
-                 - any deviation (UNDER_TORQUE, OVER_TORQUE, ANGLE_MISSING)
-                 - OK result on a safety-critical joint (HIGH severity)
-                 - OK result on an unknown joint (None → HIGH, fail-safe)
-
-    severity is already correctly set by validate_torque() because
-    safety_critical was pre-populated on state in main.py before the
-    graph started — so this check is safe to make here.
+    trend      → everything else goes through trend detection first,
+                 then RAG, then the agent.
     """
     if state.validation == "OK" and state.severity == "LOW":
         return "auto_close"
-    return "rag"
+    return "trend"
 
 
-def build_workflow(vectorstore, incident_vectorstore):
+def build_workflow(vectorstore, incident_vectorstore, trend_detector=None):
 
     graph = StateGraph(IncidentState)
 
+    trend_node = create_trend_node(trend_detector) if trend_detector else None
     rag_node = create_rag_node(vectorstore)
     incident_rag_node = create_incident_rag_node(incident_vectorstore)
 
     graph.add_node("validate", validation_node)
     graph.add_node("auto_close", auto_close_node)
+    if trend_node:
+        graph.add_node("trend", trend_node)
     graph.add_node("rag", rag_node)
     graph.add_node("rag_incidents", incident_rag_node)
     graph.add_node("agent", agent_node)
@@ -47,17 +45,20 @@ def build_workflow(vectorstore, incident_vectorstore):
 
     graph.set_entry_point("validate")
 
-    # Single conditional branch — replaces the old linear edge from validate→rag
     graph.add_conditional_edges(
         "validate",
         route_after_validate,
         {
             "auto_close": "auto_close",
-            "rag": "rag",
+            "trend": "trend" if trend_node else "rag",
         },
     )
 
     graph.add_edge("auto_close", END)
+
+    if trend_node:
+        graph.add_edge("trend", "rag")
+
     graph.add_edge("rag", "rag_incidents")
     graph.add_edge("rag_incidents", "agent")
     graph.add_edge("agent", "finalize")

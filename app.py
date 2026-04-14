@@ -40,13 +40,15 @@ def load_resources():
     from core.loader import load_events
     from core.rag import build_vector_store, build_incident_vector_store
     from core.workflow import build_workflow
+    from core.trend import TrendDetector
     from main import build_spec_lookup
 
     df                   = load_events("data/torque_events.csv")
     vectorstore          = build_vector_store("data/sop_chunks.json")
     incident_vectorstore = build_incident_vector_store("data/past_incidents.json")
     spec_lookup          = build_spec_lookup("data/sops.json")
-    workflow             = build_workflow(vectorstore, incident_vectorstore)
+    trend_detector       = TrendDetector(df)
+    workflow             = build_workflow(vectorstore, incident_vectorstore, trend_detector)
 
     return {
         "df":                   df,

@@ -127,10 +127,11 @@ def _render_node(node: str, state: dict):
     node_labels = {
         "validate":     "1. Validation",
         "auto_close":   "2. Auto-Close (fast path)",
-        "rag":          "2. SOP Retrieval",
-        "rag_incidents":"3. Incident History Retrieval",
-        "agent":        "4. Decision Agent",
-        "finalize":     "5. Finalize Action",
+        "trend":        "2. Trend Detection (SPC)",
+        "rag":          "3. SOP Retrieval",
+        "rag_incidents":"4. Incident History Retrieval",
+        "agent":        "5. Decision Agent",
+        "finalize":     "6. Finalize Action",
     }
     label = node_labels.get(node, node.upper())
 
@@ -139,6 +140,8 @@ def _render_node(node: str, state: dict):
             _render_validate(state)
         elif node == "auto_close":
             _render_auto_close(state)
+        elif node == "trend":
+            _render_trend(state)
         elif node == "rag":
             _render_rag(state)
         elif node == "rag_incidents":
@@ -187,6 +190,27 @@ def _render_auto_close(state: dict):
     result = state.get("agent_result") or {}
     action = result.get("status", "—")
     st.markdown(f"**Action:** {_action_badge_html(action)}", unsafe_allow_html=True)
+
+
+def _render_trend(state: dict):
+    """Render trend detection / SPC output."""
+    trend = state.get("trend_context", "")
+    if not trend:
+        st.markdown("No trend data available.")
+        return
+
+    is_alert = "TREND ALERT" in trend or "NOT CAPABLE" in trend or "Warning" in trend
+    if is_alert:
+        st.markdown(
+            f'<div class="info-card" style="border-left: 4px solid #e74c3c; white-space: pre-wrap;">'
+            f'{trend}</div>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f'<div class="info-card" style="white-space: pre-wrap;">{trend}</div>',
+            unsafe_allow_html=True,
+        )
 
 
 def _render_rag(state: dict):

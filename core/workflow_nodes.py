@@ -28,6 +28,31 @@ def auto_close_node(state):
     return state
 
 
+def create_trend_node(trend_detector):
+    """
+    Factory for the trend detection node.
+
+    Pure computation — no LLM calls. Analyzes tool health (Cpk) and
+    deviation patterns using historical event data. Populates
+    state.trend_context which the agent uses in its reasoning.
+    """
+    def trend_node(state):
+        context = trend_detector.analyze(
+            event_id=state.event_id,
+            tool_id=state.tool_id,
+            joint=state.joint,
+            target_nm=state.target_torque_nm,
+            tolerance_nm=state.tolerance_nm,
+        )
+        state.trend_context = context
+        logger.debug("[TREND]       %s  →  %s",
+                     state.event_id,
+                     context.split("\n")[0] if context else "no context")
+        return state
+
+    return trend_node
+
+
 def create_rag_node(sop_store):
     def rag_node(state):
         from core.rag import retrieve_context
